@@ -32,12 +32,17 @@ export function LockScreen({ onUnlock }: LockScreenProps) {
         className="relative flex flex-col items-center justify-center space-y-10 px-6 max-w-sm w-full"
       >
         {/* E-Commerce style Logo / Monogram */}
-        <div className="relative flex items-center justify-center w-32 h-32 rounded-[2rem] bg-white border border-[#E2E8F0] shadow-xl shadow-purple-500/10">
-          <div className="absolute inset-2 border border-dashed border-purple-200 rounded-[1.5rem]" />
-          <span className="font-black text-5xl text-primary tracking-tighter flex items-center gap-1">
-            X<span className="text-2xl text-[#64748B] font-medium mx-1">&amp;</span>M
-          </span>
-        </div>
+        <div className="w-28 h-28 rounded-full bg-white shadow-2xl shadow-purple-900/10 flex flex-col items-center justify-center border-4 border-double border-purple-200 relative">
+            <div className="absolute inset-[3px] rounded-full border-[0.5px] border-purple-100" />
+            <span className="text-purple-300 text-[10px] mb-1 opacity-80">⚜</span>
+            <span 
+              className="text-4xl text-[#7E22CE] leading-none tracking-widest flex items-center justify-center italic"
+              style={{ fontFamily: 'var(--font-cormorant)' }}
+            >
+              X<span className="text-purple-300 font-light text-xl mx-0.5" style={{ fontFamily: 'var(--font-playfair)' }}>&amp;</span>M
+            </span>
+            <span className="text-purple-300 text-[10px] mt-1 opacity-80 rotate-180">⚜</span>
+          </div>
 
         {/* Text */}
         <div className="text-center space-y-3">

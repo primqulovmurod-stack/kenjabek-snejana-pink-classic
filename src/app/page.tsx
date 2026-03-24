@@ -47,8 +47,11 @@ export default function LuxuryInvitation() {
         
         <footer className="py-12 md:py-24 bg-[#F8FAFC] text-center border-t border-purple-50 flex flex-col items-center justify-center space-y-4 md:space-y-6 font-sans px-4">
           <div className="w-12 h-[3px] bg-primary rounded-full" />
-          <p className="text-2xl md:text-4xl font-black text-[#0F172A] tracking-tight">
-            Xurshidbek <span className="text-primary">&amp;</span> Mohinur
+          <p 
+            className="text-3xl md:text-5xl font-medium text-[#0F172A] tracking-wider italic"
+            style={{ fontFamily: 'var(--font-cormorant)' }}
+          >
+            Xurshidbek <span className="text-purple-300 font-light mx-1" style={{ fontFamily: 'var(--font-playfair)' }}>&amp;</span> Mohinur
           </p>
           <p className="text-xs md:text-sm font-bold text-[#64748B]">
             Eng baxtli kunimizda biz bilan bo'ling
