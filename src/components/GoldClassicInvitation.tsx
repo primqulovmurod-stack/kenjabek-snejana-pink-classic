@@ -251,10 +251,6 @@ export default function GoldClassicInvitation({
             transition={{ duration: 2, ease: [0.16, 1, 0.3, 1] }}
             className="relative z-10 text-center px-4 space-y-12"
           >
-            <div className="space-y-4">
-                <span className="text-[11px] md:text-sm tracking-[1em] font-bold text-[#D4AF37] uppercase block">OILALARIMIZ BILAN BIRGA</span>
-                <div className="w-12 h-px bg-[#D4AF37]/50 mx-auto" />
-            </div>
 
             <h1 className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12">
               <span className={`text-6xl md:text-8xl lg:text-9xl font-serif italic drop-shadow-[0_0_30px_rgba(212,175,55,0.4)] ${goldText}`}>{groomName}</span>
