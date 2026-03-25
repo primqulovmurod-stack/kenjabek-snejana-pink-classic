@@ -435,32 +435,32 @@ export default function GoldClassicInvitation({
                  <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
                  
                  <div className="relative z-10 h-full flex flex-col justify-between">
-                    <div className="flex justify-between items-start">
-                       <div className={`w-14 h-10 ${goldGradient} rounded-lg shadow-xl relative overflow-hidden shrink-0`}>
-                           <div className="absolute inset-0 opacity-30 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,.5)_50%,transparent_75%)] bg-[length:10px_10px]" />
+                    <div className="flex justify-between items-start mb-6">
+                       <div className={`w-12 h-9 ${goldGradient} rounded-md shadow-lg relative overflow-hidden shrink-0`}>
+                           <div className="absolute inset-0 opacity-20 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,.5)_50%,transparent_75%)] bg-[length:8px_8px]" />
                        </div>
                        <div className="text-right">
-                           <span className="text-[10px] font-bold tracking-[0.3em] text-[#D4AF37] uppercase block">UZCARD / HUMO</span>
+                           <span className="text-[9px] font-bold tracking-[0.2em] text-[#D4AF37] uppercase block mb-1">UZCARD / HUMO</span>
                        </div>
                     </div>
 
-                    <div className="space-y-4">
-                       <div className="space-y-1">
-                          <p className="text-[9px] font-bold tracking-[0.4em] text-[#D4AF37]/60 uppercase">KARTA RAQAMI</p>
-                          <p className="text-xl xs:text-2xl font-mono tracking-[0.15em] text-white/95 whitespace-nowrap overflow-x-auto no-scrollbar">
+                    <div className="space-y-6">
+                       <div className="space-y-2">
+                          <p className="text-[8px] font-bold tracking-[0.3em] text-[#D4AF37]/60 uppercase">KARTA RAQAMI</p>
+                          <p className="text-lg xs:text-xl md:text-2xl font-mono tracking-[0.1em] text-white/95 whitespace-nowrap overflow-x-auto no-scrollbar py-1">
                             9860 6004 0356 5382
                           </p>
                        </div>
-                       <div className="flex justify-between items-end border-t border-white/10 pt-4 gap-4">
-                          <div className="min-w-0">
-                             <p className="text-[10px] font-bold tracking-[0.4em] text-[#D4AF37] uppercase mb-1">KARTA EGASI</p>
-                             <p className="text-xl font-serif italic text-white drop-shadow-sm">
-                               {groomName}
+                       <div className="flex justify-between items-end border-t border-white/10 pt-4 gap-2">
+                          <div className="min-w-0 pr-2">
+                             <p className="text-[8px] font-bold tracking-[0.3em] text-[#D4AF37]/60 uppercase mb-1">KARTA EGASI</p>
+                             <p className="text-lg font-serif italic text-white/90 truncate drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">
+                               {groomName || "Kenjabek"}
                              </p>
                           </div>
-                          <div className="flex items-center shrink-0 pb-1">
-                             <div className="w-8 h-8 rounded-full bg-[#EB001B] -mr-3 border border-black/20 shadow-lg" />
-                             <div className="w-8 h-8 rounded-full bg-[#F79E1B]/90 border border-black/20 shadow-lg" />
+                          <div className="flex items-center shrink-0 mb-1">
+                             <div className="w-7 h-7 rounded-full bg-[#EB001B] -mr-3 border border-black/20 shadow-lg" />
+                             <div className="w-7 h-7 rounded-full bg-[#F79E1B]/90 border border-black/20 shadow-lg" />
                           </div>
                        </div>
                     </div>
@@ -469,11 +469,11 @@ export default function GoldClassicInvitation({
                  <button 
                     onClick={() => {
                         navigator.clipboard.writeText("9860600403565382");
-                        alert("Nusxalandi!");
+                        alert("Karta raqami nusxalandi!");
                     }}
-                    className="absolute top-4 right-2 p-2 text-[#D4AF37]/60 hover:text-[#D4AF37] hover:bg-white/5 rounded-full transition-all"
+                    className="absolute top-3 right-2 p-3 text-[#D4AF37] hover:bg-white/5 rounded-full transition-all z-20"
                  >
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <CreditCard size={18} />
                  </button>
               </motion.div>
               <p className="text-lg text-white/40 font-serif italic tracking-wide">"Sizning tashrifingiz biz uchun eng ulug' to'yonadir"</p>
