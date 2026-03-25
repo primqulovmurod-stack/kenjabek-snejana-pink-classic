@@ -22,6 +22,18 @@ export async function generateMetadata(): Promise<Metadata> {
     };
   }
 
+  if (host.includes('gold')) {
+    return {
+      title: "Kenjabek & Sofiya - Nikoh to'yi",
+      description: "Bizning baxtli kunimizga lutfan taklif etamiz!",
+      openGraph: {
+        title: "Kenjabek & Sofiya - Nikoh to'yi",
+        description: "Eng baxtli kunimizda biz bilan bo'ling!",
+        images: ['/assets/og-preview.jpg'],
+      }
+    };
+  }
+
   return {
     title: "Xurshid & Mohinur - Nikoh to'yi",
     description: "Sizni eng baxtli kunimizga lutfan taklif etamiz!",
