@@ -1,5 +1,8 @@
 import { headers } from 'next/headers';
 import { Metadata } from 'next';
+import { GiftSection } from '@/components/luxury/GiftSection';
+import { RSVPSection } from '@/components/luxury/RSVPSection';
+import { LockScreen } from '@/components/luxury/LockScreen';
 import InvitationWrapper from './InvitationWrapper';
 
 export async function generateMetadata(): Promise<Metadata> {
