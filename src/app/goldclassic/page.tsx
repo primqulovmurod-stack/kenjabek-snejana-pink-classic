@@ -1,7 +1,7 @@
 import GoldClassicInvitation from '@/components/GoldClassicInvitation';
 
 export const metadata = {
-  title: "Kenjabek & Safiya - Nikoh to'yi",
+  title: "Kenjabek & Snejana - Nikoh to'yi",
   description: "Bizning baxtli kunimizga lutfan taklif etamiz!",
 };
 
@@ -9,7 +9,7 @@ export default function GoldClassicPage() {
   return (
     <GoldClassicInvitation 
       groomName="Kenjabek"
-      brideName="Safiya"
+      brideName="Snejana"
       date="24 - APREL - 2026"
       time="19:00"
       locationName="Demir (Asr)"

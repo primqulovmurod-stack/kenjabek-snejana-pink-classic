@@ -34,7 +34,7 @@ const goldGradient = "bg-gradient-to-br from-[#B8860B] via-[#FFD700] to-[#DAA520
 
 export default function GoldWhiteInvitation({
   groomName = "Kenjabek",
-  brideName = "Safiya",
+  brideName = "Snejana",
   date = "24 - APREL - 2026",
   time = "19:00",
   locationName = "Demir (Asr)",

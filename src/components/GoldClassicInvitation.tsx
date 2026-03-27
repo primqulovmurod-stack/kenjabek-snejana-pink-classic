@@ -31,7 +31,7 @@ interface GoldClassicInvitationProps {
 
 export default function GoldClassicInvitation({
   groomName = "Kenjabek",
-  brideName = "Safiya",
+  brideName = "Snejana",
   date = "24 - APREL - 2026",
   time = "19:00",
   locationName = "Demir (Asr)",

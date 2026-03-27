@@ -20,13 +20,13 @@ export async function generateMetadata(): Promise<Metadata> {
     };
   }
 
-  // Kenjabek & Safiya
+  // Kenjabek & Snejana
   if (host.includes('gold') || host.includes('white') || host.includes('rus') || host.includes('kenjabek') || host.includes('localhost')) {
     return {
-      title: "Kenjabek & Safiya - Nikoh to'yi",
+      title: "Kenjabek & Snejana - Nikoh to'yi",
       description: "Bizning baxtli kunimizga lutfan taklif etamiz!",
       openGraph: {
-        title: "Kenjabek & Safiya - Nikoh to'yi",
+        title: "Kenjabek & Snejana - Nikoh to'yi",
         description: "Eng baxtli kunimizda biz bilan bo'ling!",
         images: ['/assets/og-preview.jpg'],
       }

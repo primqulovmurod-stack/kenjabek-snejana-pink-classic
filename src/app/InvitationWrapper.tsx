@@ -71,7 +71,7 @@ export default function InvitationWrapper({ initialHost }: InvitationWrapperProp
     return (
       <GoldClassicInvitation 
         groomName="Kenjabek"
-        brideName="Safiya"
+        brideName="Snejana"
         date="24 - APREL - 2026"
         time="19:00"
         locationName="Demir (Asr)"
@@ -87,7 +87,7 @@ export default function InvitationWrapper({ initialHost }: InvitationWrapperProp
     return (
       <GoldWhiteInvitation 
         groomName="Kenjabek"
-        brideName="Safiya"
+        brideName="Snejana"
         date="24 - APREL - 2026"
         time="19:00"
         locationName="Demir (Asr)"
