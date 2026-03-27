@@ -15,9 +15,9 @@ interface InvitationWrapperProps {
 export default function InvitationWrapper({ initialHost }: InvitationWrapperProps) {
   const [mounted, setMounted] = useState(false);
   const [theme, setTheme] = useState<'rolex' | 'pink' | 'watch' | 'goldclassic' | 'goldwhite'>(
-    initialHost.includes('pink') ? 'pink' : 
     initialHost.includes('watch') ? 'watch' : 
-    initialHost.includes('goldclassic') ? 'goldclassic' : 'goldwhite'
+    initialHost.includes('goldclassic') ? 'goldclassic' : 
+    initialHost.includes('goldwhite') ? 'goldwhite' : 'pink'
   );
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export default function InvitationWrapper({ initialHost }: InvitationWrapperProp
     } else if (themeParam === 'goldclassic' || window.location.hostname.includes('goldclassic')) {
       setTheme('goldclassic');
     } else {
-      setTheme('goldwhite');
+      setTheme('pink');
     }
   }, []);
 
