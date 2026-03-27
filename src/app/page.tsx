@@ -20,14 +20,14 @@ export async function generateMetadata(): Promise<Metadata> {
     };
   }
 
-  // Kenjabek & Snezhana (Universal match for all related hosts)
+  // Kenjabek & Safiya
   if (host.includes('gold') || host.includes('white') || host.includes('rus') || host.includes('kenjabek') || host.includes('localhost')) {
     return {
-      title: "Кенжабек и Снежана - Свадебное приглашение",
-      description: "Приглашаем вас на наш самый счастливый день!",
+      title: "Kenjabek & Safiya - Nikoh to'yi",
+      description: "Bizning baxtli kunimizga lutfan taklif etamiz!",
       openGraph: {
-        title: "Кенжабек и Снежана - Свадебное приглашение",
-        description: "Будьте с нами в наш самый счастливый день!",
+        title: "Kenjabek & Safiya - Nikoh to'yi",
+        description: "Eng baxtli kunimizda biz bilan bo'ling!",
         images: ['/assets/og-preview.jpg'],
       }
     };

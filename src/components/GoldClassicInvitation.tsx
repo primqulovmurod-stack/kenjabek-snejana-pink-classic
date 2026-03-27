@@ -31,7 +31,7 @@ interface GoldClassicInvitationProps {
 
 export default function GoldClassicInvitation({
   groomName = "Kenjabek",
-  brideName = "Sofiya",
+  brideName = "Safiya",
   date = "24 - APREL - 2026",
   time = "19:00",
   locationName = "Demir (Asr)",
@@ -167,7 +167,7 @@ export default function GoldClassicInvitation({
                          style={{ borderStyle: 'dashed' }} />
                     <div className="w-[105%] h-[105%] border border-[#D4AF37]/50 rounded-full absolute" />
                     <h1 className={`text-5xl md:text-7xl font-serif italic ${goldText}`}>
-                        {groomName[0]} <span className="text-3xl md:text-4xl align-middle">&</span> {brideName[0]}
+                        {groomName[0]} <span className="text-3xl md:text-4xl align-middle font-serif">&</span> {brideName[0]}
                     </h1>
                     
                     {/* Animated Lock Icon */}
@@ -388,8 +388,8 @@ export default function GoldClassicInvitation({
                     <div className="w-20 h-px bg-[#D4AF37]/30 mx-auto" />
                     
                     <p className="text-xl md:text-2xl text-white/70 font-serif italic tracking-wide">
-                        {date}, SHANBA <br />
-                        <span className="text-[#D4AF37] font-bold mt-2 inline-block">SOAT {time}</span>
+                        {date}, JUMA <br />
+                        <span className="text-[#D4AF37] font-bold mt-2 inline-block">VAQT {time}</span>
                     </p>
                 </div>
 
@@ -502,7 +502,7 @@ export default function GoldClassicInvitation({
             
             <div className="pt-24 border-t border-white/5 max-w-lg mx-auto space-y-8">
               <div className="space-y-2">
-                <p className="text-[12px] tracking-[1em] font-bold text-[#D4AF37] uppercase">VERTUAL TAKLIFNOMA</p>
+                <p className="text-[12px] tracking-[1em] font-bold text-[#D4AF37] uppercase">VIRTUAL TAKLIFNOMA</p>
                 <div className="h-px w-20 bg-[#D4AF37]/30 mx-auto" />
               </div>
 
