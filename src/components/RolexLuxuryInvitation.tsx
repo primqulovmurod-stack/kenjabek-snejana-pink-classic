@@ -29,6 +29,18 @@ export default function RolexLuxuryInvitation({
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  // Scrollni bloklash (Taklifnoma ochilmaguncha)
+  useEffect(() => {
+    if (!isUnlocked) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isUnlocked]);
   
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -38,6 +50,9 @@ export default function RolexLuxuryInvitation({
 
   const handleUnlock = () => {
     setIsUnlocked(true);
+    // Sahifani eng tepaga qaytarish
+    window.scrollTo({ top: 0, behavior: 'instant' });
+
     if (audioRef.current) {
       audioRef.current.play().catch(e => console.log('Autoplay blocked:', e));
       setIsPlaying(true);

@@ -47,6 +47,18 @@ export default function GoldWhiteInvitation({
   const [isCopied, setIsCopied] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
+  // Scrollni bloklash (Taklifnoma ochilmaguncha)
+  useEffect(() => {
+    if (!isOpened) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpened]);
+
   const toggleMusic = () => {
     if (audioRef.current) {
       if (isPlaying) {
@@ -60,6 +72,9 @@ export default function GoldWhiteInvitation({
 
   const handleOpen = () => {
     setIsOpened(true);
+    // Sahifani eng tepaga qaytarish
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    
     if (audioRef.current) {
       audioRef.current.play().catch(e => console.log('Autoplay blocked:', e));
       setIsPlaying(true);
