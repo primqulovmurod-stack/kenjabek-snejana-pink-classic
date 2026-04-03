@@ -63,6 +63,9 @@ export const metadata: Metadata = {
     description: "Bizning baxtli kunimizga lutfan taklif etamiz!",
     images: ["/assets/og-preview.jpg"],
   },
+  verification: {
+    google: "googleee5c67c4ad103ff2.html", // Adding HTML filename for redundancy
+  },
 };
 
 import { Providers } from "./providers";
