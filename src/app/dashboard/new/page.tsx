@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { LayoutDashboard, Sparkles, Star, Heart, CheckCircle, ArrowRight } from 'lucide-react';
+import { LayoutDashboard, Sparkles, Star, Heart, CheckCircle, ArrowRight, Eye } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { templates } from '@/components/dashboard/TemplatePreview';
 
@@ -98,10 +98,21 @@ export default function NewInvitationPage() {
                           </div>
                       </div>
 
-                      {/* Action Button */}
-                      <div className="absolute inset-x-0 bottom-0 p-8 transform translate-y-full group-hover:translate-y-0 transition-transform duration-700">
-                          <button className="w-full flex items-center justify-center gap-3 py-5 bg-[#E11D48] text-white rounded-2xl font-black text-[10px] uppercase shadow-2xl shadow-[#E11D48]/40 active:scale-95 transition-all tracking-[0.2em]">
-                              UShbu dizaynni tahrirlash <ArrowRight size={18} />
+                      {/* Action Buttons Overlay */}
+                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-4 p-8">
+                          <button 
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                window.open(template.image, '_blank');
+                            }}
+                            className="w-full py-4 bg-white/20 backdrop-blur-md text-white border border-white/30 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-white hover:text-gray-900 transition-all flex items-center justify-center gap-2"
+                          >
+                              <Eye size={18} /> KATTALAShTIRIB KO'RISh
+                          </button>
+                          <button 
+                            className="w-full py-4 bg-[#E11D48] text-white rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-xl shadow-[#E11D48]/20 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2"
+                          >
+                              <CheckCircle size={18} /> UShBU DIZAYNNI TANLASh
                           </button>
                       </div>
                   </div>
