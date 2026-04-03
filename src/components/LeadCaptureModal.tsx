@@ -25,7 +25,7 @@ export default function LeadCaptureModal() {
 
     window.addEventListener('trigger-lead-modal', handleTrigger);
 
-    const hasShown = localStorage.getItem('lead_modal_shown');
+    const hasShown = localStorage.getItem('lead_modal_shown') || localStorage.getItem('user_phone');
     if (!hasShown) {
         const timer = setTimeout(() => {
           setIsOpen(true);
@@ -91,6 +91,7 @@ export default function LeadCaptureModal() {
 
       setIsSuccess(true);
       localStorage.setItem('lead_modal_shown', 'true');
+      localStorage.setItem('user_phone', phone); // Persistence for other modules
       
       setTimeout(() => {
         setIsOpen(false);

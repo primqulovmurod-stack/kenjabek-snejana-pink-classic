@@ -278,18 +278,29 @@ export default function EditInvitationPage({ params }: { params: Promise<{ id: s
   const [isCopied, setIsCopied] = useState(false);
 
   const handleExport = () => {
-      // Prioritize checking the invitation's own phone field over localStorage
-      // This ensures we always have a number associated with the current order
-      if (!content.phone) {
-          window.dispatchEvent(new CustomEvent('trigger-lead-modal', { 
-              detail: { 
-                  forced: true,
-                  invitationId: id 
-              } 
-          }));
+      // Prioritize checking the invitation's own phone field
+      if (content.phone) {
+          handleSave();
           return;
       }
-      handleSave();
+
+      // If missing from content, check if we captured it before in this session/browser
+      const savedPhone = localStorage.getItem('user_phone');
+      if (savedPhone) {
+          // Found it! Silently associate and proceed
+          setContent(prev => ({ ...prev, phone: savedPhone }));
+          // Give React a tiny breath to update state before final save
+          setTimeout(() => handleSave(), 50); 
+          return;
+      }
+
+      // If still missing, trigger the final forced modal
+      window.dispatchEvent(new CustomEvent('trigger-lead-modal', { 
+          detail: { 
+              forced: true,
+              invitationId: id 
+          } 
+      }));
   };
 
   return (
