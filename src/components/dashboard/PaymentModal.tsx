@@ -181,7 +181,7 @@ export default function PaymentModal({
                             className="w-full flex items-center justify-center gap-4 py-3 rounded-2xl bg-[#229ED9]/5 text-[#229ED9] font-black text-[10px] uppercase tracking-widest hover:bg-[#229ED9]/10 transition-all group"
                         >
                             <Send size={14} className="group-hover:rotate-12 transition-transform" />
-                            <span>Telegram'dan chekni yuborish</span>
+                            <span>Telegram orqali to'lov</span>
                         </a>
 
                         <p className="pt-2 text-center flex items-center justify-center gap-2 text-[10px] font-bold text-gray-300 uppercase tracking-widest">
