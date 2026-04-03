@@ -28,16 +28,16 @@ export const templates = [
     style: 'Elegant & Classic'
   },
   { 
+    id: 'pink-white', 
+    name: 'Pink Romance Edition', 
+    image: 'https://images.pexels.com/photos/1035665/pexels-photo-1035665.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    style: 'Soft & Romantic'
+  },
+  { 
     id: 'luxury-dark', 
     name: 'Luxury Dark Special', 
     image: 'https://images.pexels.com/photos/169190/pexels-photo-169190.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
     style: 'Premium Dark'
-  },
-  { 
-    id: 'milliy', 
-    name: 'Exclusive Milliy', 
-    image: 'https://images.pexels.com/photos/2263436/pexels-photo-2263436.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-    style: 'Traditional Gold'
   }
 ];
 
