@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { Invitation } from '@/lib/types';
 import { supabase } from '@/lib/supabase';
+import { useTheme } from '@/context/ThemeContext';
 
 // Mock data for demonstration
 const mockInvitations: Invitation[] = [
@@ -58,13 +59,10 @@ const mockInvitations: Invitation[] = [
 export default function DashboardPage() {
   const [invitations, setInvitations] = useState<Invitation[]>([]);
   const [loading, setLoading] = useState(true);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const { theme, toggleTheme } = useTheme();
+  const isDarkMode = theme === 'dark';
 
   useEffect(() => {
-    // Check local storage for theme
-    const savedTheme = localStorage.getItem('dashboard_theme');
-    if (savedTheme === 'dark') setIsDarkMode(true);
-
     const fetchInvitations = async () => {
       try {
         const isPlaceholder = !process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL.includes('placeholder');
@@ -103,11 +101,6 @@ export default function DashboardPage() {
     }
   };
 
-  const toggleTheme = () => {
-    const newMode = !isDarkMode;
-    setIsDarkMode(newMode);
-    localStorage.setItem('dashboard_theme', newMode ? 'dark' : 'light');
-  };
 
   return (
     <div className={`min-h-screen transition-all duration-500 p-6 md:p-12 pb-24 space-y-12 ${isDarkMode ? 'bg-[#0F0F10]' : 'bg-[#FFF9FA]'}`}>

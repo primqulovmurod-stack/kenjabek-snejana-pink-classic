@@ -5,10 +5,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Phone, Instagram, Send, Sun, Moon, Star, ExternalLink, HelpCircle, CheckCircle2, ChevronDown, Sparkles, ArrowRight, Clock, Heart, Music, MapPin, CreditCard } from 'lucide-react';
-import { useTheme } from 'next-themes';
+import { useTheme } from '@/context/ThemeContext';
 
 const LandingPage = () => {
-  const { theme, setTheme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
   const [mounted, setMounted] = React.useState(false);
   const router = useRouter();
 
@@ -44,7 +44,7 @@ const LandingPage = () => {
 
           <div className="flex items-center gap-4">
             <button
-               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+               onClick={toggleTheme}
                className="p-3 rounded-xl bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 text-gray-400 hover:text-[#E11D48] transition-all"
             >
                {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
