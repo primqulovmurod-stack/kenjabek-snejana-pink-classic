@@ -73,25 +73,23 @@ export default function LeadCaptureModal() {
         .from('leads')
         .insert([{ phone, source: window.location.pathname }]);
 
-      // 2. If invitationId provided, update the invitation record directly
-      // This fulfills Turn 5 requirement: "nomerlarni admindagi userlar malumotiga qo'shib qo'yish kerak"
+      setIsSuccess(true);
+      localStorage.setItem('lead_modal_shown', 'true');
+      localStorage.setItem('user_phone', phone);
+      
+      // Notify all components (like Editor) that a phone number is now available
+      window.dispatchEvent(new CustomEvent('invitation-updated', { detail: { phone } }));
+
       if (invId) {
           const { data: invData } = await supabase.from('invitations').select('content').eq('id', invId).single();
           if (invData) {
               const updatedContent = { ...invData.content, phone };
               await supabase.from('invitations').update({ 
-                  phone, // Dedicated phone field for admin panel
+                  phone, 
                   content: updatedContent 
               }).eq('id', invId);
-              
-              // Notify the editor to refresh its state
-              window.dispatchEvent(new CustomEvent('invitation-updated', { detail: { phone } }));
           }
       }
-
-      setIsSuccess(true);
-      localStorage.setItem('lead_modal_shown', 'true');
-      localStorage.setItem('user_phone', phone); // Persistence for other modules
       
       setTimeout(() => {
         setIsOpen(false);
