@@ -94,12 +94,12 @@ export default function LeadCaptureModal() {
       
       setTimeout(() => {
         setIsOpen(false);
-      }, 2000);
+      }, 500); // Super fast closure
     } catch (err) {
       console.error(err);
       setIsSuccess(true);
       localStorage.setItem('lead_modal_shown', 'true');
-      setTimeout(() => setIsOpen(false), 2000);
+      setTimeout(() => setIsOpen(false), 500);
     } finally {
       setIsSubmitting(false);
     }
@@ -152,9 +152,6 @@ export default function LeadCaptureModal() {
                 >
                   <CheckCircle2 size={60} className="text-green-500 mx-auto" />
                   <h2 className={`text-xl font-black tracking-tight uppercase ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Muvaffaqiyatli! ✅</h2>
-                  <p className="text-gray-500 text-sm leading-relaxed">
-                    Siz bilan bog'lanamiz.
-                  </p>
                 </motion.div>
               ) : (
                 <>

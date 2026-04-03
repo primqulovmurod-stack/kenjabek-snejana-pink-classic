@@ -196,7 +196,13 @@ export default function EditInvitationPage({ params }: { params: Promise<{ id: s
   useEffect(() => {
       const handleUpdated = (e: any) => {
           if (e.detail?.phone) {
-              setContent(prev => ({ ...prev, phone: e.detail.phone }));
+              setContent(prev => {
+                  const newState = { ...prev, phone: e.detail.phone };
+                  // After phone is updated, immediately proceed to save/export
+                  // This opens the PaymentModal automatically
+                  setTimeout(() => handleSave(), 100); 
+                  return newState;
+              });
           }
       };
       window.addEventListener('invitation-updated', handleUpdated);
