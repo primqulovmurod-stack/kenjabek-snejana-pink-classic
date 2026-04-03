@@ -564,26 +564,6 @@ export default function EditInvitationPage({ params }: { params: Promise<{ id: s
                             </label>
                         </div>
 
-                        <div className="relative pt-2">
-                            <div className="absolute inset-0 flex items-center" aria-hidden="true">
-                                <div className={`w-full border-t ${isDarkMode ? 'border-white/5' : 'border-gray-100'}`}></div>
-                            </div>
-                            <div className="relative flex justify-center text-center">
-                                <span className={`px-4 text-[8px] font-black text-gray-300 uppercase tracking-[0.3em] ${isDarkMode ? 'bg-[#141416]' : 'bg-white'}`}>Yoki havola orqali</span>
-                            </div>
-                        </div>
-
-                        <div className="space-y-2">
-                <input 
-                  type="text" 
-                  value={content.musicUrl || ''} 
-                  onChange={(e) => updateField('musicUrl', e.target.value)}
-                  placeholder="https://example.com/music.mp3"
-                  className={`w-full px-8 py-5 border-2 border-transparent rounded-[1.5rem] focus:border-[#E11D48]/10 focus:ring-4 focus:ring-[#E11D48]/5 outline-none transition-all text-[11px] font-mono ${
-                    isDarkMode ? 'bg-white/5 text-white' : 'bg-gray-50 text-gray-400'
-                  }`} 
-                />
-                        </div>
                     </div>
                 </div>
               )}
