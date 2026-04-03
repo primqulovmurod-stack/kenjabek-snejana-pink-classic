@@ -294,7 +294,7 @@ export default function EditInvitationPage({ params }: { params: Promise<{ id: s
           </div>
         </div>
 
-        <div className="flex-1 lg:overflow-y-auto p-6 space-y-12 pb-40 no-scrollbar">
+        <div className="flex-1 overflow-y-auto p-6 space-y-12 pb-64 no-scrollbar relative">
           {/* Names Section */}
           <section className="space-y-6">
             <h3 className="text-[10px] font-black text-[#E11D48] uppercase tracking-[0.2em] flex items-center gap-2">
