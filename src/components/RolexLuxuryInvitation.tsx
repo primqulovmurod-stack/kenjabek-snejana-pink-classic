@@ -104,8 +104,40 @@ export default function RolexLuxuryInvitation({
           <span className="text-[10px] tracking-[0.3em] font-bold text-white uppercase block leading-none">Nikoh</span>
         </div>
         <div className="flex items-center gap-4">
-          <button onClick={toggleMusic} className="text-white p-2 border border-white/20 rounded-full hover:bg-white/10 transition-all">
-            {isPlaying ? <Volume2 size={16} /> : <VolumeX size={16} />}
+          <button 
+            onClick={toggleMusic} 
+            className={`relative w-12 h-12 flex items-center justify-center rounded-full transition-all duration-700 ${
+                isPlaying ? 'bg-[#006039] shadow-lg shadow-[#006039]/20 scale-110' : 'bg-gray-100'
+            }`}
+          >
+            {/* Animated Ring */}
+            {isPlaying && (
+                <div className="absolute inset-0 rounded-full border-2 border-white/20 animate-ping opacity-30" />
+            )}
+            
+            <div className={`relative z-10 ${isPlaying ? 'text-white' : 'text-gray-400'}`}>
+                {isPlaying ? (
+                    <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 4, ease: "linear" }}>
+                        <Volume2 size={20} />
+                    </motion.div>
+                ) : (
+                    <VolumeX size={20} />
+                )}
+            </div>
+            
+            {/* Visualizer Lines */}
+            {isPlaying && (
+                <div className="absolute -bottom-1 flex gap-0.5 items-end h-2">
+                    {[1, 2, 3, 4].map(i => (
+                        <motion.div 
+                            key={i}
+                            animate={{ height: [4, 8, 4] }}
+                            transition={{ repeat: Infinity, duration: 0.5, delay: i * 0.1 }}
+                            className="w-0.5 bg-white rounded-full"
+                        />
+                    ))}
+                </div>
+            )}
           </button>
         </div>
       </nav>

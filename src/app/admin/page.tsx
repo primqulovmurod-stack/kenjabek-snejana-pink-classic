@@ -10,13 +10,36 @@ export default function AdminPanel() {
   const [invitations, setInvitations] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [isAuthorized, setIsAuthorized] = useState(false);
+  const [password, setPassword] = useState('');
   const { theme } = useTheme();
   const isDarkMode = theme === 'dark';
 
+  // Security Check on Mount
   useEffect(() => {
-    loadData();
+    const auth = sessionStorage.getItem('admin_session');
+    if (auth === 'true') setIsAuthorized(true);
+    
+    if (isAuthorized) {
+        loadData();
+    }
+  }, [isAuthorized]);
 
-    // Subscribe to REALTIME updates for instant data synchronization
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Default Security Password
+    if (password === 'Taklifnoma2026!') {
+        sessionStorage.setItem('admin_session', 'true');
+        setIsAuthorized(true);
+    } else {
+        alert("Xato parol! 🛑");
+    }
+  };
+
+  useEffect(() => {
+    if (!isAuthorized) return;
+    
+    // Subscribe to REALTIME updates
     const channel = supabase
       .channel('admin_realtime_sync')
       .on('postgres_changes', { event: '*', table: 'invitations', schema: 'public' }, (payload) => {
@@ -145,6 +168,51 @@ export default function AdminPanel() {
     inv.content?.brideName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     inv.slug?.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  if (!isAuthorized) {
+    return (
+        <div className={`min-h-screen flex items-center justify-center p-6 ${isDarkMode ? 'bg-[#0A0A0A]' : 'bg-[#FFF9FA]'}`}>
+            <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className={`w-full max-w-md p-10 rounded-[3rem] shadow-2xl border transition-all ${
+                    isDarkMode ? 'bg-[#141416] border-white/5' : 'bg-white border-[#FFE4E6]'
+                }`}
+            >
+                <div className="flex flex-col items-center text-center space-y-6">
+                    <div className="w-20 h-20 bg-[#E11D48]/10 rounded-3xl flex items-center justify-center text-[#E11D48] shadow-lg shadow-[#E11D48]/5">
+                        <ShieldCheck size={40} />
+                    </div>
+                    <div className="space-y-2">
+                        <h1 className={`font-serif text-3xl font-black ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Admin Gate</h1>
+                        <p className="text-gray-400 text-[10px] font-black uppercase tracking-widest leading-loose">Boshqaruv paneliga kirish uchun parol kiriting</p>
+                    </div>
+
+                    <form onSubmit={handleLogin} className="w-full space-y-4">
+                        <input 
+                            type="password"
+                            placeholder="Shaxsiy Parol"
+                            className={`w-full px-8 py-5 rounded-[1.5rem] outline-none transition-all text-sm font-black tracking-widest text-center ${
+                                isDarkMode ? 'bg-white/5 border-white/5 text-white focus:ring-[#E11D48]/20' : 'bg-gray-50 border-gray-100 text-gray-900 focus:ring-gray-100'
+                            }`}
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            autoFocus
+                        />
+                        <button 
+                            type="submit"
+                            className="w-full py-5 bg-[#E11D48] text-white rounded-[1.5rem] font-black text-[11px] uppercase tracking-[0.2em] shadow-xl shadow-[#E11D48]/20 hover:brightness-110 active:scale-95 transition-all"
+                        >
+                            KIRISH 🛡️
+                        </button>
+                    </form>
+                    
+                    <p className="text-[9px] text-gray-500 font-bold uppercase tracking-widest italic pt-4">&copy; 2026 Taklifnoma.Asia — High Authority Only</p>
+                </div>
+            </motion.div>
+        </div>
+    );
+  }
 
   return (
     <div className={`min-h-screen transition-all duration-500 p-6 md:p-12 font-sans selection:bg-[#E11D48]/10 ${isDarkMode ? 'bg-[#0A0A0A]' : 'bg-[#FFF9FA]'}`}>
