@@ -31,6 +31,7 @@ export default function PaymentModal({
   });
 
   const handlePay = () => {
+    if (!formData.cardNumber) return;
     setStep('processing');
     setTimeout(() => {
         setStep('success');
@@ -68,13 +69,13 @@ export default function PaymentModal({
             className="fixed z-[1010] w-full max-w-lg bg-white rounded-[3.5rem] shadow-[0_50px_100px_rgba(0,0,0,0.2)] border border-[#FFE4E6] overflow-hidden"
           >
             {step === 'details' && (
-                <div className="p-10 space-y-8">
+                <div className="p-10 space-y-6 max-h-[90vh] overflow-y-auto no-scrollbar">
                     <header className="flex items-center justify-between">
                         <div className="space-y-1">
                             <h2 className="font-playfair text-3xl font-black text-gray-900 tracking-tight">To'lov</h2>
                             <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest">Xavfsiz va tezkor</p>
                         </div>
-                        <button onClick={onClose} className="p-3 rounded-full hover:bg-gray-50 text-gray-300">
+                        <button onClick={onClose} className="p-3 rounded-full hover:bg-gray-50 text-gray-300 transition-colors">
                             <X size={24} />
                         </button>
                     </header>
@@ -92,60 +93,95 @@ export default function PaymentModal({
                         </div>
                     </div>
 
-                    <div className="space-y-6">
-                        <div className="p-6 bg-gray-50 rounded-[2rem] border border-dashed border-gray-200 text-center space-y-4">
-                            <div>
-                                <p className="text-[9px] font-black uppercase tracking-[0.2em] text-gray-400 mb-1">Taklifnoma ID raqamingiz</p>
-                                <p className="text-sm font-black text-[#E11D48] tracking-tighter uppercase">{invitationId}</p>
+                    <div className="p-6 bg-gray-50 rounded-[2rem] border border-dashed border-gray-200 text-center space-y-4">
+                        <div>
+                            <p className="text-[9px] font-black uppercase tracking-[0.2em] text-gray-400 mb-1">Taklifnoma ID raqamingiz</p>
+                            <p className="text-sm font-black text-[#E11D48] tracking-tighter uppercase">{invitationId}</p>
+                        </div>
+                        
+                        <button 
+                            onClick={handleCopy}
+                            disabled={!isPaid}
+                            className={`w-full flex items-center justify-center gap-3 py-4 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all border ${
+                                isPaid 
+                                ? 'bg-green-50 text-green-600 border-green-100 hover:bg-green-100 active:scale-95' 
+                                : 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed opacity-60'
+                            }`}
+                        >
+                            {isPaid ? (
+                                <>
+                                    {copied ? <CheckCircle size={14} /> : <Copy size={14} />}
+                                    {copied ? 'NUshALANDI!' : 'HAVOLANI NUShALASh'}
+                                </>
+                            ) : (
+                                <>
+                                    <Clock size={14} />
+                                    FAOLLAShTIRILGACH NUShALASh MUMKIN
+                                </>
+                            )}
+                        </button>
+                    </div>
+
+                    {/* Card Details Path - RESTORED */}
+                    <div className="space-y-4">
+                        <div className="space-y-2">
+                            <label className="text-[10px] font-bold text-gray-400 uppercase ml-4 tracking-widest leading-none">Karta raqami (UZCARD / HUMO)</label>
+                            <div className="relative">
+                                <CreditCard className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-300" size={18} />
+                                <input 
+                                    placeholder="8600 **** **** ****"
+                                    className="w-full pl-16 pr-6 py-5 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-[#E11D48]/5 focus:border-[#E11D48]/30 outline-none transition-all text-sm font-black tracking-widest"
+                                    value={formData.cardNumber}
+                                    onChange={(e) => setFormData({...formData, cardNumber: e.target.value})}
+                                />
                             </div>
-                            
-                            {/* Copy Link Button - Conditional */}
-                            <button 
-                                onClick={handleCopy}
-                                disabled={!isPaid}
-                                className={`w-full flex items-center justify-center gap-3 py-4 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all border ${
-                                    isPaid 
-                                    ? 'bg-green-50 text-green-600 border-green-100 hover:bg-green-100' 
-                                    : 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed opacity-60'
-                                }`}
-                            >
-                                {isPaid ? (
-                                    <>
-                                        {copied ? <CheckCircle size={14} /> : <Copy size={14} />}
-                                        {copied ? 'NUshALANDI!' : 'HAVOLANI NUShALASh'}
-                                    </>
-                                ) : (
-                                    <>
-                                        <Clock size={14} />
-                                        FAOLLAShTIRILGACH NUShALASh MUMKIN
-                                    </>
-                                )}
-                            </button>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-bold text-gray-400 uppercase ml-4 tracking-widest leading-none">Muddati</label>
+                                <input 
+                                    placeholder="MM/YY"
+                                    className="w-full px-6 py-5 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-[#E11D48]/5 focus:border-[#E11D48]/30 outline-none transition-all text-sm font-black text-center tracking-widest"
+                                    value={formData.expiry}
+                                    onChange={(e) => setFormData({...formData, expiry: e.target.value})}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-bold text-gray-400 uppercase ml-4 tracking-widest leading-none">CVC/CVV</label>
+                                <input 
+                                    placeholder="***"
+                                    className="w-full px-6 py-5 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-[#E11D48]/5 focus:border-[#E11D48]/30 outline-none transition-all text-sm font-black text-center tracking-widest"
+                                    value={formData.cvc}
+                                    onChange={(e) => setFormData({...formData, cvc: e.target.value})}
+                                />
+                            </div>
                         </div>
                     </div>
 
-                    <footer className="space-y-4">
-                        <a 
-                            href={`https://t.me/taklifnoma_asia?text=Assalomu alaykum, buyurtma qilmoqchiman. ID: ${invitationId}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="w-full flex items-center justify-center gap-4 py-6 rounded-[2rem] bg-[#229ED9] text-white font-black text-sm uppercase tracking-widest hover:brightness-110 shadow-xl shadow-[#229ED9]/20 transition-all group"
-                        >
-                            <Send size={20} className="group-hover:rotate-12 transition-transform" />
-                            <span>TELEGRAM ORQALI TASDIQLASH</span>
-                        </a>
-
+                    <footer className="space-y-4 pt-4">
                         <button 
+                            disabled={!formData.cardNumber}
                             onClick={handlePay}
-                            className="w-full flex items-center justify-center gap-4 py-6 rounded-[2rem] bg-[#E11D48] text-white font-black text-sm uppercase tracking-widest shadow-xl shadow-[#E11D48]/30 hover:brightness-110 active:scale-95 transition-all"
+                            className="w-full flex items-center justify-center gap-4 py-6 rounded-[2rem] bg-[#E11D48] text-white font-black text-sm uppercase tracking-widest shadow-xl shadow-[#E11D48]/30 hover:brightness-110 active:scale-95 transition-all disabled:opacity-50 disabled:grayscale"
                         >
                             <Lock size={18} />
-                            <span>KARTA ORQALI TO'LOV</span>
+                            <span>KARTA ORQALI TASDIQLASH</span>
                         </button>
 
-                        <p className="pt-4 text-center flex items-center justify-center gap-2 text-[9px] font-bold text-gray-300 uppercase tracking-widest">
+                        <a 
+                            href={`https://t.me/taklifnoma_asia?text=Assalomu alaykum, to'lov qildim. ID: ${invitationId}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-full flex items-center justify-center gap-4 py-3 rounded-2xl bg-[#229ED9]/5 text-[#229ED9] font-black text-[10px] uppercase tracking-widest hover:bg-[#229ED9]/10 transition-all group"
+                        >
+                            <Send size={14} className="group-hover:rotate-12 transition-transform" />
+                            <span>Telegram'dan chekni yuborish</span>
+                        </a>
+
+                        <p className="pt-2 text-center flex items-center justify-center gap-2 text-[10px] font-bold text-gray-300 uppercase tracking-widest">
                             <ShieldCheck size={14} className="text-green-400" />
-                            Xavfsiz bank to'lovi • 24/7 Qo'llab-quvvatlash
+                            Bank xavfsizligi • 3D Secure
                         </p>
                     </footer>
                 </div>
