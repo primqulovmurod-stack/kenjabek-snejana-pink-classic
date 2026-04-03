@@ -35,31 +35,44 @@ export default function PaymentModal({
     name: ''
   });
 
-  // Polling for status update
+  // Realtime subscription for instant payment confirmation
   useEffect(() => {
-    let interval: NodeJS.Timeout;
-    
+    if (!isOpen || isPaid || !invitationId) return;
+
+    // 1. Initial check on mount/open
     const checkStatus = async () => {
-      if (isOpen && !isPaid && invitationId) {
-        const { data, error } = await supabase
+        const { data } = await supabase
           .from('invitations')
           .select('is_paid')
           .eq('id', invitationId)
           .single();
         
-        if (data && !error && data.is_paid) {
+        if (data?.is_paid) {
           setIsPaid(true);
-          onSuccess(); // Notify parent
+          onSuccess();
         }
-      }
     };
+    checkStatus();
 
-    if (isOpen && !isPaid) {
-      checkStatus();
-      interval = setInterval(checkStatus, 5000); // Check every 5 seconds
-    }
+    // 2. Realtime listener for the specific record
+    const channel = supabase
+      .channel(`payment_sync_${invitationId}`)
+      .on('postgres_changes', { 
+          event: 'UPDATE', 
+          table: 'invitations', 
+          schema: 'public',
+          filter: `id=eq.${invitationId}` 
+      }, (payload) => {
+          if (payload.new.is_paid) {
+              setIsPaid(true);
+              onSuccess();
+          }
+      })
+      .subscribe();
 
-    return () => clearInterval(interval);
+    return () => {
+        supabase.removeChannel(channel);
+    };
   }, [isOpen, isPaid, invitationId, onSuccess]);
 
   // Sync initialPaid prop
