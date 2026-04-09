@@ -27,6 +27,8 @@ interface GoldWhiteInvitationProps {
   musicUrl?: string;
   cardNumber?: string;
   cardName?: string;
+  showGift?: boolean;
+  description?: string;
   isPreview?: boolean;
   isMuted?: boolean;
 }
@@ -34,7 +36,7 @@ interface GoldWhiteInvitationProps {
 const goldText = "bg-clip-text text-transparent bg-gradient-to-b from-[#B8860B] via-[#FFD700] to-[#B8860B]";
 const goldGradient = "bg-gradient-to-br from-[#B8860B] via-[#FFD700] to-[#DAA520]";
 
-export default function GoldDarkInvitation({
+export default function GoldClassicInvitation({
   groomName = "Kenjabek",
   brideName = "Snejana",
   date = "24 - APREL - 2026",
@@ -46,6 +48,8 @@ export default function GoldDarkInvitation({
   musicUrl = "/assets/die_with_a_smile.mp3",
   cardNumber = "9860 6004 0356 5382",
   cardName = "Kenjabek",
+  showGift = true,
+  description = "Hayotimizning eng quvonchli kunida biz bilan birga bo'ling.",
   isPreview = false,
   isMuted = false
 }: GoldWhiteInvitationProps) {
@@ -258,7 +262,7 @@ export default function GoldDarkInvitation({
 
             <div className="space-y-4 md:space-y-6 pt-6 md:pt-20">
               <p className="text-[13px] md:text-3xl font-serif italic tracking-wide max-w-lg mx-auto text-center text-[#D4AF37] leading-relaxed px-6 opacity-90">
-                Hayotimizning eng quvonchli kunida biz bilan birga bo'ling.
+                {description}
               </p>
             </div>
 
@@ -396,70 +400,72 @@ export default function GoldDarkInvitation({
           </div>
         </section>
 
-        <section className="py-32 md:py-48 px-6 bg-[#0a0a0a] relative overflow-hidden">
-           <div className="max-w-4xl mx-auto text-center space-y-20 relative z-10">
-              <motion.div {...fadeIn} className="space-y-4">
-                <span className="text-[#D4AF37] text-xs tracking-[0.6em] font-bold uppercase">TO'YONA UCHUN</span>
-                <h2 className={`text-5xl md:text-6xl font-serif italic ${goldText}`}>Wedding Gift</h2>
-                <GoldOrnament />
-              </motion.div>
-
-              <motion.div 
-                whileHover={{ y: -15, scale: 1.02 }}
-                transition={{ type: "spring", stiffness: 100 }}
-                className="w-full max-w-[420px] mx-auto aspect-[1.586/1] bg-[#111] p-5 md:p-8 text-white text-left relative overflow-hidden shadow-[0_40px_100px_rgba(212,175,55,0.1)] rounded-[1.5rem] md:rounded-[2.5rem] border border-[#D4AF37]/20 group"
-              >
-                 <div className="relative z-10 h-full flex flex-col justify-between">
-                    <div className="flex justify-between items-start pt-1 md:pt-2">
-                       {/* Gold Chip */}
-                       <div className={`w-10 h-8 md:w-14 md:h-11 ${goldGradient} rounded-lg md:rounded-xl shadow-inner relative overflow-hidden shrink-0`}>
-                           <div className="absolute inset-0 opacity-30 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,.5)_50%,transparent_75%)] bg-[length:6px_6px] md:bg-[length:10px_10px]" />
-                           <div className="absolute inset-1.5 md:inset-2 border-[0.5px] border-black/10 rounded-md md:rounded-lg" />
-                       </div>
-                       <div className="text-right">
-                           <span className="text-[7px] md:text-[10px] font-bold tracking-[0.1em] md:tracking-[0.2em] text-[#D4AF37] uppercase block mb-1 pr-4 md:pr-6 whitespace-nowrap">UZCARD / HUMO</span>
-                           <div className="pr-3 md:pr-4"><CreditCard size={16} className="text-[#D4AF37] opacity-60 ml-auto md:w-5 md:h-5" /></div>
-                       </div>
-                    </div>
-
-                    <div className="space-y-4 md:space-y-6">
-                       <div className="space-y-2 md:space-y-3">
-                          <p className="text-[8px] md:text-[9px] font-bold tracking-[0.2em] md:tracking-[0.3em] text-[#D4AF37] uppercase">KARTA RAQAMI</p>
-                          <p className="text-[12px] sm:text-base md:text-2xl font-mono tracking-[0.05em] md:tracking-[0.1em] text-white py-0.5 md:py-1 whitespace-nowrap overflow-hidden">
-                            {cardNumber}
-                          </p>
-                       </div>
-                       
-                       <div className="w-full h-px bg-white/5" />
-
-                       <div className="flex justify-between items-end gap-2 pb-1 md:pb-2">
-                          <div className="min-w-0 pr-1 md:pr-2">
-                             <p className="text-[8px] md:text-[10px] font-bold tracking-[0.2em] md:tracking-[0.3em] text-[#D4AF37] uppercase mb-1 md:mb-2">KARTA EGASI</p>
-                             <p className={`text-base md:text-2xl font-serif italic ${goldText} drop-shadow-sm truncate`}>
-                               {cardName}
-                             </p>
-                          </div>
-                          
-                          {/* Mastercard-like Logo */}
-                          <div className="flex -space-x-3 md:-space-x-4 mb-1 shrink-0">
-                             <div className="w-7 h-7 md:w-10 md:h-10 rounded-full bg-[#EB001B] opacity-90 blur-[0.2px] md:blur-[0.5px]" />
-                             <div className="w-7 h-7 md:w-10 md:h-10 rounded-full bg-[#F79E1B] opacity-80 blur-[0.2px] md:blur-[0.5px]" />
-                          </div>
-                       </div>
-                    </div>
-                 </div>
-
-                 <button 
-                    onClick={() => {
-                        navigator.clipboard.writeText(cardNumber.replace(/\s/g, ''));
-                        alert("Nusxalandi!");
-                    }}
-                    className="absolute inset-0 z-20"
-                 />
-              </motion.div>
-              <p className="text-lg text-gray-500 font-serif italic tracking-wide px-4">"Sizning tashrifingiz biz uchun eng ulug' to'yonadir"</p>
-           </div>
-        </section>
+        {showGift && (
+          <section className="py-32 md:py-48 px-6 bg-[#0a0a0a] relative overflow-hidden">
+             <div className="max-w-4xl mx-auto text-center space-y-20 relative z-10">
+                <motion.div {...fadeIn} className="space-y-4">
+                  <span className="text-[#D4AF37] text-xs tracking-[0.6em] font-bold uppercase">TO'YONA UCHUN</span>
+                  <h2 className={`text-5xl md:text-6xl font-serif italic ${goldText}`}>Wedding Gift</h2>
+                  <GoldOrnament />
+                </motion.div>
+  
+                <motion.div 
+                  whileHover={{ y: -15, scale: 1.02 }}
+                  transition={{ type: "spring", stiffness: 100 }}
+                  className="w-full max-w-[420px] mx-auto aspect-[1.586/1] bg-[#111] p-5 md:p-8 text-white text-left relative overflow-hidden shadow-[0_40px_100px_rgba(212,175,55,0.1)] rounded-[1.5rem] md:rounded-[2.5rem] border border-[#D4AF37]/20 group"
+                >
+                   <div className="relative z-10 h-full flex flex-col justify-between">
+                      <div className="flex justify-between items-start pt-1 md:pt-2">
+                         {/* Gold Chip */}
+                         <div className={`w-10 h-8 md:w-14 md:h-11 ${goldGradient} rounded-lg md:rounded-xl shadow-inner relative overflow-hidden shrink-0`}>
+                             <div className="absolute inset-0 opacity-30 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,.5)_50%,transparent_75%)] bg-[length:6px_6px] md:bg-[length:10px_10px]" />
+                             <div className="absolute inset-1.5 md:inset-2 border-[0.5px] border-black/10 rounded-md md:rounded-lg" />
+                         </div>
+                         <div className="text-right">
+                             <span className="text-[7px] md:text-[10px] font-bold tracking-[0.1em] md:tracking-[0.2em] text-[#D4AF37] uppercase block mb-1 pr-4 md:pr-6 whitespace-nowrap">UZCARD / HUMO</span>
+                             <div className="pr-3 md:pr-4"><CreditCard size={16} className="text-[#D4AF37] opacity-60 ml-auto md:w-5 md:h-5" /></div>
+                         </div>
+                      </div>
+  
+                      <div className="space-y-4 md:space-y-6">
+                         <div className="space-y-2 md:space-y-3">
+                            <p className="text-[8px] md:text-[9px] font-bold tracking-[0.2em] md:tracking-[0.3em] text-[#D4AF37] uppercase">KARTA RAQAMI</p>
+                            <p className="text-[12px] sm:text-base md:text-2xl font-mono tracking-[0.05em] md:tracking-[0.1em] text-white py-0.5 md:py-1 whitespace-nowrap overflow-hidden">
+                              {cardNumber}
+                            </p>
+                         </div>
+                         
+                         <div className="w-full h-px bg-white/5" />
+  
+                         <div className="flex justify-between items-end gap-2 pb-1 md:pb-2">
+                            <div className="min-w-0 pr-1 md:pr-2">
+                               <p className="text-[8px] md:text-[10px] font-bold tracking-[0.2em] md:tracking-[0.3em] text-[#D4AF37] uppercase mb-1 md:mb-2">KARTA EGASI</p>
+                               <p className={`text-base md:text-2xl font-serif italic ${goldText} drop-shadow-sm truncate`}>
+                                 {cardName}
+                               </p>
+                            </div>
+                            
+                            {/* Mastercard-like Logo */}
+                            <div className="flex -space-x-3 md:-space-x-4 mb-1 shrink-0">
+                               <div className="w-7 h-7 md:w-10 md:h-10 rounded-full bg-[#EB001B] opacity-90 blur-[0.2px] md:blur-[0.5px]" />
+                               <div className="w-7 h-7 md:w-10 md:h-10 rounded-full bg-[#F79E1B] opacity-80 blur-[0.2px] md:blur-[0.5px]" />
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+  
+                   <button 
+                      onClick={() => {
+                          navigator.clipboard.writeText(cardNumber.replace(/\s/g, ''));
+                          alert("Nusxalandi!");
+                      }}
+                      className="absolute inset-0 z-20"
+                   />
+                </motion.div>
+                <p className="text-lg text-gray-500 font-serif italic tracking-wide px-4">"Sizning tashrifingiz biz uchun eng ulug' to'yonadir"</p>
+             </div>
+          </section>
+        )}
 
         <footer className="py-32 md:py-48 px-6 bg-[#0f0f0f] text-center relative border-t border-[#D4AF37]/10">
           <div className="space-y-12">

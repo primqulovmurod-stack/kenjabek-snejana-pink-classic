@@ -35,6 +35,7 @@ import { InvitationContent } from '@/lib/types';
 import { supabase } from '@/lib/supabase';
 import TemplatePreview, { templates } from '@/components/dashboard/TemplatePreview';
 import PaymentModal from '@/components/dashboard/PaymentModal';
+import LeadCaptureModal from '@/components/LeadCaptureModal';
 import { useTheme } from '@/context/ThemeContext';
 const MUSIC_TRACKS = [
     { name: 'Die With A Smile (LADY GAGA)', url: '/assets/die_with_a_smile.mp3' },
@@ -945,6 +946,7 @@ export default function EditInvitationPage({ params }: { params: Promise<{ id: s
         invitationId={id}
         slug={generateSlug(content.groomName, content.brideName, content.date)}
       />
+      <LeadCaptureModal />
     </div>
   );
 }
