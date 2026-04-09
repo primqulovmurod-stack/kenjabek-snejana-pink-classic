@@ -49,7 +49,7 @@ export default async function Page({
     host.includes('taklifnoma-asia.vercel.app') ||
     host.includes('localhost');
   
-  const isInvitation = !isMainLanding && (
+  const isInvitation = host.includes('localhost') || params.theme || (!isMainLanding && (
     host.includes('vercel.app') || 
     host.includes('pink') || 
     host.includes('gold') || 
@@ -57,9 +57,8 @@ export default async function Page({
     host.includes('kenjabek') || 
     host.includes('rolex') || 
     host.includes('xurshid') || 
-    host.includes('mohinur') ||
-    !!params.theme
-  );
+    host.includes('mohinur')
+  ));
 
   if (isInvitation) {
     return <InvitationWrapper initialHost={host} />;

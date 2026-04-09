@@ -69,8 +69,8 @@ export default function GoldClassicWhiteInvitation({
   };
 
   return (
-    <div className={`min-h-screen bg-white text-[#1A1A1A] font-sans relative flex justify-center ${isPreview ? 'h-full overflow-hidden' : 'overflow-x-hidden'}`}>
-      <div className={`w-full max-w-[500px] bg-white relative shadow-2xl ${isPreview ? 'h-full' : 'min-h-screen'} ${isOpened && isPreview ? 'overflow-y-auto' : 'overflow-hidden'}`}>
+    <div className={`min-h-screen bg-white text-[#1A1A1A] font-sans relative flex justify-center ${isPreview ? 'h-full overflow-hidden' : (isOpened ? '' : 'h-screen overflow-hidden')}`}>
+      <div className={`w-full max-w-[500px] bg-white relative shadow-2xl ${isPreview ? 'h-full' : (isOpened ? 'min-h-screen' : 'h-screen overflow-hidden')}`}>
         {musicUrl && <audio ref={audioRef} src={musicUrl} loop muted={isMuted} />}
 
         <AnimatePresence>
@@ -79,32 +79,44 @@ export default function GoldClassicWhiteInvitation({
               initial={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 1 }}
-              className="absolute inset-0 z-[100] flex flex-col items-center justify-center bg-white p-6 text-center overflow-hidden"
+              className="absolute inset-0 z-[100] flex flex-col items-center justify-center bg-white p-6 text-center"
             >
-              <div className="space-y-16 md:space-y-24 w-full flex flex-col items-center">
-                <div className="w-40 h-40 border border-[#D4AF37] rounded-full flex items-center justify-center relative">
-                    <h1 className={`text-5xl font-serif italic ${goldText}`}>
-                      {groomName?.[0] || 'K'} <span className="text-3xl text-black/30">&</span> {brideName?.[0] || 'K'}
+              <div className="space-y-12 md:space-y-16 w-full flex flex-col items-center max-w-lg mx-auto">
+                <div className="space-y-4">
+                   <p className="text-[11px] tracking-[0.8em] font-bold text-[#D4AF37] italic uppercase">Taklifnoma Asia</p>
+                </div>
+
+                <div className="space-y-6">
+                    <h1 className="flex flex-col items-center gap-4">
+                        <span className={`text-4xl md:text-5xl font-serif italic ${goldText}`}>{groomName || "Kuyov"}</span>
+                        <span className="text-xl md:text-2xl text-black/10 font-serif italic">&</span>
+                        <span className={`text-4xl md:text-5xl font-serif italic ${goldText}`}>{brideName || "Kelin"}</span>
                     </h1>
-                    <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-white px-4 py-1 border border-[#D4AF37]/30 rounded-full text-[#D4AF37]">
-                        <Heart size={18} fill="currentColor" />
+                    <div className="w-12 h-px bg-[#D4AF37]/30 mx-auto" />
+                    <p className="text-[11px] md:text-xs text-black/40 font-serif italic px-8 leading-relaxed max-w-xs mx-auto">
+                        Bizning baxtli kunimizda sizni ko'rishdan bag'oyatda xursandmiz
+                    </p>
+                </div>
+
+                <div className="w-24 h-24 border border-[#D4AF37]/30 rounded-full flex items-center justify-center relative bg-white/50 backdrop-blur-sm">
+                    <Heart size={32} className="text-[#D4AF37]/40" fill="currentColor" />
+                    <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-4 py-1 bg-white border border-[#D4AF37]/30 rounded-full">
+                        <p className={`text-xs font-serif font-bold ${goldText}`}>{date.split(' - ')[0] || "24"}</p>
                     </div>
                 </div>
-                <div className="space-y-8 flex flex-col items-center">
-                  <p className="text-[11px] tracking-[0.8em] font-bold text-[#D4AF37] italic uppercase">Taklifnoma Asia</p>
-                  <button onClick={handleOpen} className="group flex flex-col items-center gap-6 outline-none">
-                      <div className="w-24 h-24 rounded-full border border-[#D4AF37]/40 flex items-center justify-center bg-white shadow-xl group-active:scale-95 transition-transform">
-                          <MailOpen className="w-10 h-10 text-[#D4AF37]" strokeWidth={1} />
-                      </div>
-                      <span className="text-[13px] font-bold tracking-[0.6em] text-[#D4AF37] uppercase">Ochish</span>
-                  </button>
-                </div>
+
+                <button onClick={handleOpen} className="group flex flex-col items-center gap-6 outline-none pt-4">
+                    <div className="w-20 h-20 rounded-full border border-[#D4AF37]/40 flex items-center justify-center bg-white shadow-xl group-active:scale-95 transition-transform">
+                        <MailOpen className="w-8 h-8 text-[#D4AF37]" strokeWidth={1} />
+                    </div>
+                    <span className="text-[10px] font-bold tracking-[0.4em] text-[#D4AF37] uppercase">Taklifnomani ochish</span>
+                </button>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
 
-        <main className={`transition-opacity duration-1000 ${isOpened ? 'opacity-100' : 'opacity-0'}`}>
+        <main className={`transition-opacity duration-1000 ${isOpened ? 'opacity-100' : 'opacity-0'} ${!isOpened ? 'hidden' : 'block'}`}>
           <div className="fixed top-8 right-8 z-50">
               <button 
                 onClick={() => {

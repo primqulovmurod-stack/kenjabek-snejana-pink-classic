@@ -54,7 +54,7 @@ export default function TemplatePreview({ content, isPreview, isMuted }: Templat
     case 'goldclassic':
         return <GoldClassicInvitation {...content} isPreview isMuted={isMuted} />;
     case 'gold-classic-white':
-        return <GoldClassicWhiteInvitation {...content} isPreview isMuted={isMuted} />;
+        return <GoldWhiteInvitation {...content} isPreview isMuted={isMuted} />;
     case 'rolex':
         return <RolexLuxuryInvitation {...content} isPreview />;
     case 'milliy':

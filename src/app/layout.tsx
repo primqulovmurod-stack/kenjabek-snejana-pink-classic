@@ -69,7 +69,7 @@ export const metadata: Metadata = {
 };
 
 import { Providers } from "./providers";
-import LeadCaptureModal from "@/components/LeadCaptureModal";
+
 
 export default function RootLayout({
   children,
@@ -111,7 +111,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col font-sans" suppressHydrationWarning>
         <Providers>
             {children}
-            <LeadCaptureModal />
+
         </Providers>
       </body>
     </html>
