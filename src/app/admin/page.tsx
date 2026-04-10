@@ -256,7 +256,6 @@ export default function AdminPanel() {
 
   return (
     <div className="dark" style={{ backgroundColor: '#0A0A0A', color: 'white', '--background': '#0A0A0A', '--foreground': '#FFFFFF' } as React.CSSProperties}>
-      <script dangerouslySetInnerHTML={{ __html: `document.documentElement.classList.add('dark');` }} />
       <div className="min-h-screen transition-all duration-500 p-6 md:p-12 font-sans selection:bg-[#E11D48]/10" style={{ backgroundColor: '#0A0A0A' }}>
       <div className="max-w-7xl mx-auto space-y-10">
         <header className="flex flex-col md:flex-row md:items-center justify-between gap-8 p-10 rounded-[3rem] shadow-xl border transition-all" style={{ backgroundColor: '#141416', borderColor: 'rgba(255,255,255,0.05)' }}>
