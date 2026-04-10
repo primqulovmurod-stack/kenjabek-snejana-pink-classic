@@ -9,6 +9,7 @@ import { useTheme } from '@/context/ThemeContext';
 export default function AdminPanel() {
   const [invitations, setInvitations] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [password, setPassword] = useState('');
@@ -162,19 +163,12 @@ export default function AdminPanel() {
   };
 
   const deleteInvite = async (invId: string) => {
-    alert("O'chirish boshlandi! ID: " + invId);
-    console.log('DELETE REQUEST:', invId);
-    
-    if (!invId) {
-        alert("Xatolik: ID topilmadi!");
-        return;
-    }
-
-    const confirmed = confirm("Ushbu taklifnomani o'chirib tashlamoqchimisiz?");
-    if (!confirmed) return;
+    if (!invId) return;
 
     const originalData = [...invitations];
     try {
+        setDeleteConfirmId(null); // Modalni yopish
+        
         // UI dan vaqtinchalik olib tashlash
         setInvitations(prev => prev.filter(item => item.id !== invId));
 
@@ -186,7 +180,7 @@ export default function AdminPanel() {
         });
 
         if (!response.ok) {
-            throw new Error("Serverda o'chirishda xatolik yuz berdi.");
+            throw new Error("Serverda o'chirishda xatolik.");
         }
 
         // Local storage sync
@@ -195,10 +189,8 @@ export default function AdminPanel() {
             const data = JSON.parse(local).filter((x: any) => x.id !== invId);
             localStorage.setItem('taklifnoma_invitations', JSON.stringify(data));
         }
-
-        alert("Taklifnoma muvaffaqiyatli o'chirildi! ✅");
     } catch (err) {
-        alert("Xatolik: O'chirib bo'lmadi! ❌");
+        console.error("Detelete error:", err);
         setInvitations(originalData); // Qaytarish
     }
   };
@@ -379,19 +371,13 @@ export default function AdminPanel() {
                                     </button>
                                 </td>
                                 <td 
-                                  className="px-6 py-6 text-right whitespace-nowrap cursor-pointer hover:bg-red-500/20 transition-all active:bg-red-500/40"
-                                  onClick={(e) => {
-                                      window.alert("TD bosildi! ID: " + inv.id);
-                                      window.alert("O'chirish jarayoni boshlanmoqda...");
-                                      deleteInvite(inv.id);
-                                  }}
+                                  className="px-6 py-6 text-right whitespace-nowrap cursor-pointer hover:bg-red-500/10 transition-all active:bg-red-500/20"
+                                  onClick={() => setDeleteConfirmId(inv.id)}
                                 >
                                     <div className="flex items-center justify-end gap-1.5 pointer-events-none">
-                                        <button 
-                                          className="p-3 bg-blue-500/10 text-blue-500 rounded-xl"
-                                        >
+                                        <div className="p-3 bg-blue-500/10 text-blue-500 rounded-xl">
                                             <Send size={14} />
-                                        </button>
+                                        </div>
                                         <div className="p-4 bg-red-600 text-white font-black rounded-xl text-[10px] uppercase tracking-tighter shadow-xl">
                                             O'CHIRISH
                                         </div>
@@ -405,6 +391,35 @@ export default function AdminPanel() {
         </div>
       </div>
       </div>
+
+      {/* CUSTOM DELETE MODAL */}
+      {deleteConfirmId && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-sm animate-in fade-in duration-300">
+              <div className="bg-[#141416] border border-white/5 p-8 rounded-[2.5rem] max-w-sm w-full shadow-2xl animate-in zoom-in-95 duration-300">
+                  <div className="w-16 h-16 bg-red-500/10 text-red-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                      <Trash2 size={32} />
+                  </div>
+                  <h2 className="text-xl font-black text-white text-center mb-2">O'chirishni tasdiqlang</h2>
+                  <p className="text-gray-400 text-center text-sm mb-8 leading-relaxed">
+                      Siz haqiqatan ham ushbu taklifnomani (+ rasm va ma'lumotlarni) butunlay o'chirib tashlamoqchimisiz?
+                  </p>
+                  <div className="flex flex-col gap-3">
+                      <button 
+                        onClick={() => deleteInvite(deleteConfirmId)}
+                        className="w-full py-4 bg-red-600 hover:bg-red-700 text-white font-black rounded-2xl transition-all active:scale-95 shadow-lg shadow-red-600/20"
+                      >
+                          HA, O'CHIRILSIN
+                      </button>
+                      <button 
+                        onClick={() => setDeleteConfirmId(null)}
+                        className="w-full py-4 bg-white/5 hover:bg-white/10 text-gray-400 font-bold rounded-2xl transition-all"
+                      >
+                          BEKOR QILISH
+                      </button>
+                  </div>
+              </div>
+          </div>
+      )}
     </div>
   );
 }
