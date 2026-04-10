@@ -211,7 +211,9 @@ export default function GoldDarkInvitation({
               </div>
               
               <div className="space-y-8">
-                <p className="text-[11px] tracking-[0.8em] uppercase font-bold text-[#D4AF37]/80">TO'YIMIZGA TAKLIF ETAMIZ</p>
+                <p className="text-[11px] tracking-[0.8em] uppercase font-bold text-[#D4AF37]/80">
+                  {isRussian ? "ПРИГЛАШАЕМ НА СВАДЬБУ" : "TO'YIMIZGA TAKLIF ETAMIZ"}
+                </p>
                 <GoldOrnament className="py-2" />
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -259,19 +261,26 @@ export default function GoldDarkInvitation({
             className="relative z-10 text-center space-y-6 md:space-y-12 w-full"
           >
             <div className="space-y-4">
-                <span className="text-[10px] md:text-sm tracking-[0.6em] md:tracking-[1em] font-bold text-[#D4AF37] uppercase block text-center">OILALARIMIZ BILAN BIRGA</span>
+                <span className="text-[10px] md:text-sm tracking-[0.6em] md:tracking-[1em] font-bold text-[#D4AF37] uppercase block text-center">
+                  {isRussian ? "СОВМЕСТНО С НАШИМИ СЕМЬЯМИ" : "OILALARIMIZ BILAN BIRGA"}
+                </span>
                 <div className="w-16 md:w-24 h-px bg-[#D4AF37]/50 mx-auto" />
             </div>
 
             <h1 className="flex flex-col items-center justify-center gap-1 md:gap-6 w-full px-4 pt-6 md:pt-20">
               <span className={`text-3xl sm:text-5xl md:text-8xl lg:text-9xl font-serif italic drop-shadow-[0_0_30px_rgba(212,175,55,0.2)] ${goldText} leading-tight text-center w-full break-words px-2`}>{groomName}</span>
-              <span className="text-serif italic text-lg md:text-5xl text-gray-500 align-middle py-1">va</span>
+              <span className="text-serif italic text-lg md:text-5xl text-gray-500 align-middle py-1">
+                {isRussian ? "и" : "va"}
+              </span>
               <span className={`text-3xl sm:text-5xl md:text-8xl lg:text-9xl font-serif italic drop-shadow-[0_0_30px_rgba(212,175,55,0.2)] ${goldText} leading-tight text-center w-full break-words px-2`}>{brideName}</span>
             </h1>
 
             <div className="space-y-4 md:space-y-6 pt-6 md:pt-20">
               <p className="text-[13px] md:text-3xl font-serif italic tracking-wide max-w-lg mx-auto text-center text-[#D4AF37] leading-relaxed px-6 opacity-90">
-                Hayotimizning eng quvonchli kunida biz bilan birga bo'ling.
+                {isRussian 
+                  ? "Мы будем бесконечно рады видеть вас в самый важный и незабываемый день нашей жизни. Разделите с нами это счастливое мгновение."
+                  : "Hayotimizning eng quvonchli kunida biz bilan birga bo'ling."
+                }
               </p>
             </div>
 
@@ -288,10 +297,12 @@ export default function GoldDarkInvitation({
             <motion.div {...fadeIn} className="text-center mb-12 md:mb-24 space-y-4 md:space-y-6">
                 <div className="flex items-center justify-center gap-4 mb-2 md:mb-4">
                     <div className="w-12 md:w-16 h-px bg-gradient-to-r from-transparent to-[#D4AF37]" />
-                    <span className="text-[#D4AF37] text-[10px] md:text-sm tracking-[0.4em] md:tracking-[0.6em] font-bold uppercase">Wedding Day</span>
+                    <span className="text-[#D4AF37] text-[10px] md:text-sm tracking-[0.4em] md:tracking-[0.6em] font-bold uppercase">{isRussian ? "Save the Date" : "Wedding Day"}</span>
                     <div className="w-12 md:w-16 h-px bg-gradient-to-l from-transparent to-[#D4AF37]" />
                 </div>
-                <h2 className={`text-4xl md:text-6xl font-serif italic tracking-tight ${goldText}`}>Sanani Eslab Qoling</h2>
+                <h2 className={`text-4xl md:text-6xl font-serif italic tracking-tight ${goldText}`}>
+                  {isRussian ? "Запомните Дату" : "Sanani Eslab Qoling"}
+                </h2>
                 <GoldOrnament />
             </motion.div>
 
@@ -304,7 +315,10 @@ export default function GoldDarkInvitation({
               </div>
               
               <div className="grid grid-cols-7 gap-1 md:gap-4 text-center text-[9px] md:text-[11px] font-bold text-[#D4AF37] opacity-60 mb-8 tracking-[0.2em]">
-                <span>YAK</span><span>DUSH</span><span>SESH</span><span>CHOR</span><span>PAY</span><span>JUM</span><span>SHAN</span>
+                {isRussian 
+                  ? <><span>ВСК</span><span>ПНД</span><span>ВТР</span><span>СРД</span><span>ЧТВ</span><span>ПТН</span><span>СУБ</span></>
+                  : <><span>YAK</span><span>DUSH</span><span>SESH</span><span>CHOR</span><span>PAY</span><span>JUM</span><span>SHAN</span></>
+                }
               </div>
               
               <div className="grid grid-cols-7 gap-y-3 md:gap-y-6 text-center items-center">
@@ -344,8 +358,10 @@ export default function GoldDarkInvitation({
 
           <div className="max-w-3xl mx-auto relative z-10">
             <motion.div {...fadeIn} className="text-center mb-20 space-y-4">
-               <span className="text-[#D4AF37] text-xs tracking-[0.8em] font-bold uppercase text-center">EVENT DETAILS</span>
-               <h2 className={`text-5xl md:text-6xl font-serif italic ${goldText}`}>Nikoh Oqshomi</h2>
+               <span className="text-[#D4AF37] text-xs tracking-[0.8em] font-bold uppercase text-center">{isRussian ? "ДЕТАЛИ МЕРОПРИЯТИЯ" : "EVENT DETAILS"}</span>
+               <h2 className={`text-5xl md:text-6xl font-serif italic ${goldText}`}>
+                 {isRussian ? "Свадебная Церемония" : "Nikoh Oqshomi"}
+               </h2>
                <GoldOrnament />
             </motion.div>
 
@@ -381,7 +397,7 @@ export default function GoldDarkInvitation({
                         className={`w-full max-w-sm mx-auto h-16 gold-shimmer text-black font-bold tracking-[0.4em] uppercase text-[12px] shadow-[0_10px_40px_rgba(212,175,55,0.3)] hover:shadow-[0_15px_60px_rgba(212,175,55,0.5)] transition-all flex items-center justify-center gap-4 rounded-full active:scale-95`}
                     >
                         <MapPin size={20} />
-                        XARITANI KO'RISH
+                        {isRussian ? "ПОСМОТРЕТЬ НА КАРТЕ" : "XARITANI KO'RISH"}
                     </a>
                 </div>
             </motion.div>
@@ -391,16 +407,20 @@ export default function GoldDarkInvitation({
         <section className="py-32 md:py-48 px-6 bg-[#0f0f0f] text-white overflow-hidden relative">
           <div className="max-w-5xl mx-auto text-center space-y-24 relative z-10">
             <motion.div {...fadeIn} className="space-y-6">
-              <span className="text-[#D4AF37] text-xs tracking-[1em] font-bold uppercase opacity-80">QANCHA VAQT QOLDI?</span>
-              <h2 className={`text-5xl md:text-7xl font-serif italic drop-shadow-[0_0_20px_rgba(212,175,55,0.2)] ${goldText}`}>Baxtli Kunimizgacha</h2>
+              <span className="text-[#D4AF37] text-xs tracking-[1em] font-bold uppercase opacity-80">
+                {isRussian ? "СКОЛЬКО ВРЕМЕНИ ОСТАЛОСЬ?" : "QANCHA VAQT QOLDI?"}
+              </span>
+              <h2 className={`text-5xl md:text-7xl font-serif italic drop-shadow-[0_0_20px_rgba(212,175,55,0.2)] ${goldText}`}>
+                {isRussian ? "До нашего торжества" : "Baxtli Kunimizgacha"}
+              </h2>
               <GoldOrnament />
             </motion.div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
-                <CountdownItem label="KUN" date={targetDate} type="days" />
-                <CountdownItem label="SOAT" date={targetDate} type="hours" />
-                <CountdownItem label="DAQIQA" date={targetDate} type="minutes" />
-                <CountdownItem label="SONIYA" date={targetDate} type="seconds" />
+                <CountdownItem label={isRussian ? "ДНЕЙ" : "KUN"} date={targetDate} type="days" />
+                <CountdownItem label={isRussian ? "ЧАСОВ" : "SOAT"} date={targetDate} type="hours" />
+                <CountdownItem label={isRussian ? "МИНУТ" : "DAQIQA"} date={targetDate} type="minutes" />
+                <CountdownItem label={isRussian ? "СЕКУНД" : "SONIYA"} date={targetDate} type="seconds" />
             </div>
           </div>
           
@@ -412,7 +432,9 @@ export default function GoldDarkInvitation({
         <section className="py-32 md:py-48 px-6 bg-[#0a0a0a] relative overflow-hidden">
            <div className="max-w-4xl mx-auto text-center space-y-20 relative z-10">
               <motion.div {...fadeIn} className="space-y-4">
-                <span className="text-[#D4AF37] text-xs tracking-[0.6em] font-bold uppercase">TO'YONA UCHUN</span>
+                <span className="text-[#D4AF37] text-xs tracking-[0.6em] font-bold uppercase">
+                  {isRussian ? "ДЛЯ ПОДАРКОВ" : "TO'YONA UCHUN"}
+                </span>
                 <h2 className={`text-5xl md:text-6xl font-serif italic ${goldText}`}>Wedding Gift</h2>
                 <GoldOrnament />
               </motion.div>
@@ -465,20 +487,20 @@ export default function GoldDarkInvitation({
                  <button 
                     onClick={() => {
                         navigator.clipboard.writeText(cardNumber.replace(/\s/g, ''));
-                        alert("Nusxalandi!");
+                        alert(isRussian ? "Скопировано!" : "Nusxalandi!");
                     }}
                     className="absolute inset-0 z-20"
                  />
               </motion.div>
-              <p className="text-lg text-gray-500 font-serif italic tracking-wide px-4">"Sizning tashrifingiz biz uchun eng ulug' to'yonadir"</p>
+              <p className="text-lg text-gray-500 font-serif italic tracking-wide px-4">{isRussian ? "Ваш визит – самый лучший подарок для нас" : "Sizning tashrifingiz biz uchun eng ulug' to'yonadir"}</p>
            </div>
         </section>
 
         <footer className="py-32 md:py-48 px-6 bg-[#0f0f0f] text-center relative border-t border-[#D4AF37]/10">
           <div className="space-y-12">
             <div className="space-y-4">
-               <p className="text-xl md:text-2xl font-serif italic text-[#D4AF37]/60">Minnatdorchilik va sevgi bilan,</p>
-               <div className={`text-3xl sm:text-4xl md:text-8xl font-serif italic drop-shadow-[0_0_40px_rgba(212,175,55,0.1)] ${goldText} leading-tight px-4`}>{groomName} va {brideName}</div>
+               <p className="text-xl md:text-2xl font-serif italic text-[#D4AF37]/60">{isRussian ? "С благодарностью и любовью," : "Minnatdorchilik va sevgi bilan,"}</p>
+               <div className={`text-3xl sm:text-4xl md:text-8xl font-serif italic drop-shadow-[0_0_40px_rgba(212,175,55,0.1)] ${goldText} leading-tight px-4`}>{groomName} {isRussian ? "и" : "va"} {brideName}</div>
             </div>
             
             <GoldOrnament />
@@ -490,7 +512,7 @@ export default function GoldDarkInvitation({
               </div>
 
               <div className="space-y-4">
-                <p className="text-[10px] text-[#D4AF37]/60 uppercase tracking-[0.5em] text-center">Ximatdan foydalanish:</p>
+                <p className="text-[10px] text-[#D4AF37]/60 uppercase tracking-[0.5em] text-center">{isRussian ? "ИСПОЛЬЗОВАТЬ СЕРВИС:" : "Ximatdan foydalanish:"}</p>
                 <a href="https://taklifnoma.asia" target="_blank" className="inline-block px-10 py-5 bg-[#D4AF37] text-black rounded-full text-[11px] font-black tracking-widest uppercase shadow-lg hover:brightness-110 transition-all active:scale-95">TAKLIFNOMA YARATISH</a>
               </div>
             </div>

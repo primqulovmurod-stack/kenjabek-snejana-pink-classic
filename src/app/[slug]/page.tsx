@@ -21,13 +21,16 @@ export default function InvitationPage({ params }: { params: Promise<{ slug: str
           .from('invitations')
           .select('*')
           .eq('slug', slug)
-          .single();
+          .order('created_at', { ascending: false }) // Get the newest one if multiple exist
+          .limit(1);
 
         if (error) {
           console.error('Supabase fetch error:', error);
           setInvitation(null);
+        } else if (data && data.length > 0) {
+          setInvitation(data[0]);
         } else {
-          setInvitation(data);
+          setInvitation(null);
         }
       } catch (err) {
         console.error('Fatal fetch error:', err);

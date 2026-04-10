@@ -123,7 +123,10 @@ export default function GoldClassicWhiteInvitation({
                     </h1>
                     <div className="w-12 h-px bg-[#D4AF37]/30 mx-auto" />
                     <p className="text-[11px] md:text-xs text-black/40 font-serif italic px-8 leading-relaxed max-w-xs mx-auto">
-                        Bizning baxtli kunimizda sizni ko'rishdan bag'oyatda xursandmiz
+                        {isRussian 
+                          ? "Будем бесконечно рады видеть вас в самый счастливый день нашей жизни"
+                          : "Bizning baxtli kunimizda sizni ko'rishdan bag'oyatda xursandmiz"
+                        }
                     </p>
                 </div>
 
@@ -138,7 +141,7 @@ export default function GoldClassicWhiteInvitation({
                     <div className="w-20 h-20 rounded-full border border-[#D4AF37]/40 flex items-center justify-center bg-white shadow-xl group-active:scale-95 transition-transform">
                         <MailOpen className="w-8 h-8 text-[#D4AF37]" strokeWidth={1} />
                     </div>
-                    <span className="text-[10px] font-bold tracking-[0.4em] text-[#D4AF37] uppercase">{isRussian ? "ОТКРЫТЬ ПРИГЛАШЕНИЕ" : "Taklifnomani ochish"}</span>
+                    <span className="text-[10px] font-bold tracking-[0.4em] text-[#D4AF37] uppercase">{isRussian ? "ОТКРЫТЬ ПРИГЛАШЕНИЕ" : "TAKLIFNOMANI OCHISH"}</span>
                 </button>
               </div>
             </motion.div>
@@ -163,9 +166,9 @@ export default function GoldClassicWhiteInvitation({
 
           <section className={`relative ${isPreview ? 'min-h-[600px]' : 'min-h-screen'} flex flex-col items-center justify-center text-center space-y-12 py-20`}>
             <h1 className="flex flex-col items-center gap-6">
-              <span className={`text-5xl md:text-6xl font-serif italic ${goldText}`}>{groomName || "Kuyov"}</span>
-              <span className="text-2xl md:text-3xl text-black/20">va</span>
-              <span className={`text-5xl md:text-6xl font-serif italic ${goldText}`}>{brideName || "Kelin"}</span>
+              <span className={`text-5xl md:text-6xl font-serif italic ${goldText}`}>{groomName || (isRussian ? "Жених" : "Kuyov")}</span>
+              <span className="text-2xl md:text-3xl text-black/20">{isRussian ? "и" : "va"}</span>
+              <span className={`text-5xl md:text-6xl font-serif italic ${goldText}`}>{brideName || (isRussian ? "Невеста" : "Kelin")}</span>
             </h1>
             <div className="w-12 h-px bg-[#D4AF37]/40 mx-auto" />
             <p className={`text-[13px] md:text-base font-serif italic text-black/70 whitespace-pre-line break-words px-2 max-w-[95%] mx-auto leading-relaxed tracking-tight`}>
@@ -193,7 +196,7 @@ export default function GoldClassicWhiteInvitation({
           {/* Gift Section */}
           {showGift && (
             <section className={`relative w-full ${isPreview ? 'py-12' : 'py-32'} bg-white flex flex-col items-center justify-center overflow-hidden font-sans`}>
-               <h2 className={`text-4xl font-serif italic mb-16 ${goldText}`}>To'yona uchun</h2>
+               <h2 className={`text-4xl font-serif italic mb-16 ${goldText}`}>{isRussian ? "Для подарков" : "To'yona uchun"}</h2>
                
                <div className={`w-full ${isPreview ? 'max-w-[320px]' : 'max-w-lg'} px-4 relative z-10`}>
                   <div className="group w-full aspect-[1.58/1] bg-gradient-to-br from-white to-[#F5F5F5] rounded-[1.5rem] md:rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.08)] border border-[#D4AF37]/30 text-left relative overflow-hidden flex flex-col justify-between p-5 md:p-10 transition-transform duration-300 hover:scale-[1.02]">
@@ -242,11 +245,11 @@ export default function GoldClassicWhiteInvitation({
            <footer className="py-32 px-10 text-center border-t border-black/5 space-y-16 bg-[#FAFAFA]">
                <div className="space-y-6">
                    <p className={`text-4xl font-serif italic ${goldText}`}>Taklifnoma Asia</p>
-                   <p className="text-[10px] text-black/40 font-bold tracking-[0.5em] uppercase italic">Baxtli lahzalar maskani</p>
+                   <p className="text-[10px] text-black/40 font-bold tracking-[0.5em] uppercase italic">{isRussian ? "Место вечного счастья" : "Baxtli lahzalar maskani"}</p>
                </div>
                <div className="space-y-8 pt-12">
-                   <p className="text-[11px] text-black/10 font-bold tracking-widest uppercase italic font-sans">O'z taklifnomangizni yarating:</p>
-                   <a href="https://taklifnoma.asia" target="_blank" className="inline-block px-12 py-6 bg-black text-white rounded-2xl text-[11px] font-black tracking-widest uppercase shadow-xl hover:bg-[#D4AF37] transition-all">Taklifnoma Yaratish</a>
+                   <p className="text-[11px] text-black/10 font-bold tracking-widest uppercase italic font-sans">{isRussian ? "Создать свое приглашение:" : "O'z taklifnomangizni yarating:"}</p>
+                   <a href="https://taklifnoma.asia" target="_blank" className="inline-block px-12 py-6 bg-black text-white rounded-2xl text-[11px] font-black tracking-widest uppercase shadow-xl hover:bg-[#D4AF37] transition-all">{isRussian ? "Создать приглашение" : "Taklifnoma Yaratish"}</a>
                </div>
            </footer>
         </main>
