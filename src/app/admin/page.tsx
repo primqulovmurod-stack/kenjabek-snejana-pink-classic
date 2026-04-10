@@ -161,14 +161,18 @@ export default function AdminPanel() {
     }
   };
 
-  const deleteInvite = async (id: string) => {
-    if (!id) return;
+  const deleteInvite = async (e: React.MouseEvent, id: string) => {
+    e.preventDefault();
+    e.stopPropagation();
     
-    if (!window.confirm("Ushbu taklifnomani butunlay o'chirib tashlamoqchimisiz?")) return;
+    if (!id) {
+        alert("ID topilmadi! ❌");
+        return;
+    }
     
-    const original = [...invitations];
-    try {
-        console.log('Initiating deletion for ID:', id);
+    console.log('User clicked delete for ID:', id);
+    
+    if (!window.confirm(`ID: ${id}\n\nUshbu taklifnomani butunlay o'chirib tashlamoqchimisiz?`)) return;
         // Optimistic UI update
         setInvitations(prev => prev.filter(inv => inv.id !== id));
         
@@ -389,8 +393,8 @@ export default function AdminPanel() {
                                             <Send size={14} />
                                         </button>
                                         <button 
-                                          onClick={() => deleteInvite(inv.id)}
-                                          className="p-3 text-gray-400 hover:text-white hover:bg-red-500 rounded-xl transition-all shadow-sm hover:shadow-red-500/20"
+                                          onClick={(e) => deleteInvite(e, inv.id)}
+                                          className="relative z-10 p-3 text-gray-400 hover:text-white hover:bg-red-500 rounded-xl transition-all shadow-sm hover:shadow-red-500/20 active:scale-90"
                                           title="O'chirish"
                                         >
                                             <Trash2 size={18} />
