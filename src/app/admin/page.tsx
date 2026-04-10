@@ -301,18 +301,18 @@ export default function AdminPanel() {
         </div>
 
         <div className="rounded-[3rem] shadow-xl border transition-all overflow-hidden" style={{ backgroundColor: '#141416', borderColor: 'rgba(255,255,255,0.05)' }}>
-            <div className="overflow-x-auto">
+            <div className="overflow-hidden">
                 <table className="w-full text-left border-collapse">
                     <thead>
                         <tr className="bg-white/5 border-b border-white/5">
-                            <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400 whitespace-nowrap">T/r</th>
-                            <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400 whitespace-nowrap">ID / Havola</th>
-                            <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400 whitespace-nowrap">Shaxs</th>
-                            <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400 whitespace-nowrap">Telefon</th>
-                            <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400 whitespace-nowrap">Email</th>
-                            <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400 whitespace-nowrap">Manba</th>
-                            <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400 whitespace-nowrap">Holat</th>
-                            <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400 text-right whitespace-nowrap">Amallar</th>
+                            <th className="px-6 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400 whitespace-nowrap">T/r</th>
+                            <th className="px-6 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400 whitespace-nowrap">ID / Havola</th>
+                            <th className="px-6 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400 whitespace-nowrap">Shaxs</th>
+                            <th className="px-6 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400 whitespace-nowrap">Telefon</th>
+                            <th className="px-6 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400 whitespace-nowrap">Email</th>
+                            <th className="px-6 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400 whitespace-nowrap">Manba</th>
+                            <th className="px-6 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400 whitespace-nowrap">Holat</th>
+                            <th className="px-6 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400 text-right whitespace-nowrap">Amallar</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-white/5">
@@ -322,100 +322,99 @@ export default function AdminPanel() {
                             <tr><td colSpan={8} className="p-20 text-center text-gray-400 font-bold">Hech narsa topilmadi.</td></tr>
                         ) : filtered.map((inv, index) => (
                             <tr key={inv.id} className="hover:bg-white/5 transition-colors group">
-                                <td className="px-8 py-6 whitespace-nowrap">
+                                <td className="px-6 py-6 whitespace-nowrap">
                                     <span className="text-xs font-black text-gray-600">#{index + 1}</span>
                                 </td>
-                                <td className="px-8 py-6 whitespace-nowrap">
+                                <td className="px-6 py-6 whitespace-nowrap">
                                     <div className="space-y-1">
-                                        <p className="font-mono text-[10px] font-bold text-gray-500 uppercase tracking-tighter">#{inv.id.slice(0,8)}</p>
+                                        <p className="font-mono text-[9px] font-bold text-gray-500 uppercase tracking-tighter">#{inv.id.slice(0,8)}</p>
                                         <a 
                                             href={`/${inv.slug}`}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="text-sm font-black text-[#E11D48] flex items-center gap-2 hover:text-[#BE123C] transition-all"
+                                            className="text-[13px] font-black text-[#E11D48] flex items-center gap-2 hover:text-[#BE123C] transition-all max-w-[120px] truncate"
                                         >
-                                            <span className="hover:underline underline-offset-4">{inv.slug}</span>
-                                            <ExternalLink size={14} />
+                                            <span className="truncate">{inv.slug}</span>
+                                            <ExternalLink size={12} className="flex-shrink-0" />
                                         </a>
                                     </div>
                                 </td>
-                                <td className="px-8 py-6 whitespace-nowrap">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 rounded-xl flex items-center justify-center text-[#E11D48] bg-white/5 border border-white/5 group-hover:border-[#E11D48]/20 transition-all flex-shrink-0">
-                                            <Heart size={18} />
+                                <td className="px-6 py-6 whitespace-nowrap">
+                                    <div className="flex items-center gap-3 max-w-[180px]">
+                                        <div className="w-8 h-8 rounded-lg flex items-center justify-center text-[#E11D48] bg-white/5 border border-white/5 group-hover:border-[#E11D48]/20 transition-all flex-shrink-0">
+                                            <Heart size={14} />
                                         </div>
-                                        <div>
-                                            <p className="text-sm font-black transition-colors text-white whitespace-nowrap">{inv.content?.groomName} & {inv.content?.brideName}</p>
-                                            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest whitespace-nowrap">{inv.content?.theme || 'Custom Style'}</p>
+                                        <div className="truncate">
+                                            <p className="text-sm font-black transition-colors text-white truncate">{inv.content?.groomName} & {inv.content?.brideName}</p>
+                                            <p className="text-[9px] text-gray-500 font-bold uppercase tracking-widest truncate">{inv.content?.theme || 'Custom Style'}</p>
                                         </div>
                                     </div>
                                 </td>
-                                <td className="px-8 py-6 whitespace-nowrap">
+                                <td className="px-6 py-6 whitespace-nowrap">
                                      <div className="flex items-center gap-2">
-                                        <div className="w-8 h-8 rounded-lg flex items-center justify-center text-green-500 bg-green-500/10 flex-shrink-0">
-                                            <Phone size={14} />
+                                        <div className="w-7 h-7 rounded-lg flex items-center justify-center text-green-500 bg-green-500/10 flex-shrink-0">
+                                            <Phone size={12} />
                                         </div>
-                                        <span className="text-xs font-black transition-colors text-gray-400 whitespace-nowrap">
-                                            {inv.phone || inv.content?.phone || 'Mavjud emas'}
+                                        <span className="text-xs font-black transition-colors text-gray-400">
+                                            {inv.phone || inv.content?.phone || 'Noma\'lum'}
                                         </span>
                                      </div>
                                 </td>
-                                <td className="px-8 py-6 whitespace-nowrap">
-                                     <div className="flex items-center gap-2">
-                                        <div className="w-8 h-8 rounded-lg flex items-center justify-center text-blue-500 bg-blue-500/10 flex-shrink-0">
-                                            <Mail size={14} />
+                                <td className="px-6 py-6 whitespace-nowrap">
+                                     <div className="flex items-center gap-2 max-w-[150px]">
+                                        <div className="w-7 h-7 rounded-lg flex items-center justify-center text-blue-500 bg-blue-500/10 flex-shrink-0">
+                                            <Mail size={12} />
                                         </div>
-                                        <span className="text-xs font-medium transition-colors text-gray-400 whitespace-nowrap">
-                                            {inv.email || inv.content?.email || 'Mavjud emas'}
+                                        <span className="text-xs font-medium transition-colors text-gray-400 truncate">
+                                            {inv.email || inv.content?.email || 'Noma\'lum'}
                                         </span>
                                      </div>
                                 </td>
-                                <td className="px-8 py-6 whitespace-nowrap">
+                                <td className="px-6 py-6 whitespace-nowrap">
                                     {inv.source === 'google' || inv.content?.source === 'google' ? (
-                                        <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-blue-500/10 border border-blue-500/20 w-fit">
-                                            <img src="https://www.gstatic.com/images/branding/product/2x/googleg_48dp.png" className="w-4 h-4" alt="Google" />
-                                            <span className="text-[10px] font-black text-blue-500 uppercase tracking-widest">Google</span>
+                                        <div className="flex items-center gap-2 px-2.5 py-1 rounded-lg bg-blue-500/10 border border-blue-500/20 w-fit">
+                                            <img src="https://www.gstatic.com/images/branding/product/2x/googleg_48dp.png" className="w-3.5 h-3.5" alt="Google" />
+                                            <span className="text-[9px] font-black text-blue-500 uppercase tracking-widest">Google</span>
                                         </div>
                                     ) : (
-                                        <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-gray-500/10 border border-white/5 w-fit">
-                                            <ExternalLink size={12} className="text-gray-500" />
-                                            <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest">Direkt</span>
+                                        <div className="flex items-center gap-2 px-2.5 py-1 rounded-lg bg-gray-500/10 border border-white/5 w-fit">
+                                            <ExternalLink size={10} className="text-gray-500" />
+                                            <span className="text-[9px] font-black text-gray-500 uppercase tracking-widest">Direkt</span>
                                         </div>
                                     )}
                                 </td>
-                                <td className="px-8 py-6 whitespace-nowrap">
+                                <td className="px-6 py-6 whitespace-nowrap">
                                     <button 
                                         onClick={() => toggleStatus(inv.id, inv.is_paid)}
-                                        className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-[9px] font-black uppercase tracking-widest transition-all ${
+                                        className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest transition-all ${
                                             inv.is_paid 
                                             ? 'bg-green-500/10 text-green-500 border border-green-500/20 shadow-lg shadow-green-500/5' 
                                             : 'bg-orange-500/10 text-orange-500 border border-orange-500/20 hover:bg-orange-500/20'
                                         }`}
                                     >
-                                        <CheckCircle size={14} className={inv.is_paid ? 'opacity-100' : 'opacity-30'} />
-                                        {inv.is_paid ? 'Faollashdi' : 'Kutilmoqda'}
+                                        <CheckCircle size={12} className={inv.is_paid ? 'opacity-100' : 'opacity-30'} />
+                                        {inv.is_paid ? 'Faol' : 'Kutilmoqda'}
                                     </button>
                                 </td>
-                                <td className="px-8 py-6 text-right whitespace-nowrap">
-                                    <div className="flex items-center justify-end gap-2">
+                                <td className="px-6 py-6 text-right whitespace-nowrap">
+                                    <div className="flex items-center justify-end gap-1.5">
                                         <button 
                                           onClick={() => {
                                               const url = `https://taklifnoma.asia/${inv.slug}`;
                                               window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent('Tabriklaymiz! Sizning taklifnomangiz tayyor va faollashtirildi! 💍✨ %0A%0AHavola: ')}${encodeURIComponent(url)}`, '_blank');
                                           }}
-                                          className="p-3 bg-blue-500/10 text-blue-500 hover:bg-blue-500/20 rounded-xl transition-all shadow-lg"
+                                          className="p-2.5 bg-blue-500/10 text-blue-500 hover:bg-blue-500/20 rounded-lg transition-all shadow-lg"
                                           title="Telegram"
                                         >
-                                            <Send size={16} />
+                                            <Send size={14} />
                                         </button>
                                         <button 
                                           onClick={() => deleteInvite(inv.id)}
-                                          className="p-3 text-gray-500 hover:text-red-500 hover:bg-red-500/10 rounded-xl transition-all"
+                                          className="p-2.5 text-gray-500 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all"
                                         >
-                                            <Trash2 size={18} />
+                                            <Trash2 size={16} />
                                         </button>
                                     </div>
-                                </td>
                             </tr>
                         ))}
                     </tbody>
