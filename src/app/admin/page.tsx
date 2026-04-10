@@ -12,8 +12,17 @@ export default function AdminPanel() {
   const [searchTerm, setSearchTerm] = useState('');
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [password, setPassword] = useState('');
-  const { theme } = useTheme();
-  const isDarkMode = theme === 'dark';
+  const [stats, setStats] = useState({ total: 0, paid: 0, pending: 0 });
+  const { setTheme } = useTheme();
+  
+  // Force dark mode globally on mount for admin page
+  useEffect(() => {
+    setTheme('dark');
+    document.documentElement.classList.add('dark');
+  }, [setTheme]);
+
+  // Admin panel is permanently in premium dark mode
+  const isDarkMode = true; 
 
   // Security Check on Mount
   useEffect(() => {
@@ -24,6 +33,15 @@ export default function AdminPanel() {
         loadData();
     }
   }, [isAuthorized]);
+
+  useEffect(() => {
+    // Calculate stats whenever invitations change
+    setStats({
+        total: invitations.length,
+        paid: invitations.filter(i => i.is_paid).length,
+        pending: invitations.filter(i => !i.is_paid).length
+    });
+  }, [invitations]);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,7 +74,7 @@ export default function AdminPanel() {
     return () => {
         supabase.removeChannel(channel);
     };
-  }, []);
+  }, [isAuthorized]);
 
   const loadData = async () => {
     setLoading(true);
@@ -71,14 +89,15 @@ export default function AdminPanel() {
             console.error('Admin fetch error:', invError);
             // Backup fallback to local storage
             const localData = localStorage.getItem('taklifnoma_invitations');
-            if (localData) setInvitations(JSON.parse(localData));
-        } else if (invData && invData.length > 0) {
+            if (localData) {
+                const parsed = JSON.parse(localData);
+                // Ensure newest first for local data too
+                parsed.sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+                setInvitations(parsed);
+            }
+        } else if (invData) {
             setInvitations(invData);
             localStorage.setItem('taklifnoma_invitations', JSON.stringify(invData));
-        } else {
-            // Check local storage if DB is empty
-            const localData = localStorage.getItem('taklifnoma_invitations');
-            if (localData) setInvitations(JSON.parse(localData));
         }
     } catch (err) {
         console.error('Fatal loadData error:', err);
@@ -194,20 +213,19 @@ export default function AdminPanel() {
 
   if (!isAuthorized) {
     return (
-        <div className={`min-h-screen flex items-center justify-center p-6 ${isDarkMode ? 'bg-[#0A0A0A]' : 'bg-[#FFF9FA]'}`}>
+      <div className="dark">
+        <div className="min-h-screen flex items-center justify-center p-6 bg-[#0A0A0A]">
             <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className={`w-full max-w-md p-10 rounded-[3rem] shadow-2xl border transition-all ${
-                    isDarkMode ? 'bg-[#141416] border-white/5' : 'bg-white border-[#FFE4E6]'
-                }`}
+                className="w-full max-w-md p-10 rounded-[3rem] shadow-2xl border transition-all bg-[#141416] border-white/5"
             >
                 <div className="flex flex-col items-center text-center space-y-6">
                     <div className="w-20 h-20 bg-[#E11D48]/10 rounded-3xl flex items-center justify-center text-[#E11D48] shadow-lg shadow-[#E11D48]/5">
                         <ShieldCheck size={40} />
                     </div>
                     <div className="space-y-2">
-                        <h1 className={`font-serif text-3xl font-black ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Admin Gate</h1>
+                        <h1 className="font-serif text-3xl font-black text-white">Admin Gate</h1>
                         <p className="text-gray-400 text-[10px] font-black uppercase tracking-widest leading-loose">Boshqaruv paneliga kirish uchun parol kiriting</p>
                     </div>
 
@@ -215,9 +233,7 @@ export default function AdminPanel() {
                         <input 
                             type="password"
                             placeholder="Shaxsiy Parol"
-                            className={`w-full px-8 py-5 rounded-[1.5rem] outline-none transition-all text-sm font-black tracking-widest text-center ${
-                                isDarkMode ? 'bg-white/5 border-white/5 text-white focus:ring-[#E11D48]/20' : 'bg-gray-50 border-gray-100 text-gray-900 focus:ring-gray-100'
-                            }`}
+                            className="w-full px-8 py-5 rounded-[1.5rem] outline-none transition-all text-sm font-black tracking-widest text-center bg-white/5 border-white/5 text-white focus:ring-[#E11D48]/20"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             autoFocus
@@ -234,20 +250,24 @@ export default function AdminPanel() {
                 </div>
             </motion.div>
         </div>
+      </div>
     );
   }
 
   return (
-    <div className={`min-h-screen transition-all duration-500 p-6 md:p-12 font-sans selection:bg-[#E11D48]/10 ${isDarkMode ? 'bg-[#0A0A0A]' : 'bg-[#FFF9FA]'}`}>
-      <div className="max-w-7xl mx-auto space-y-12">
-        <header className={`flex flex-col md:flex-row md:items-center justify-between gap-8 p-10 rounded-[3rem] shadow-xl border transition-all ${
-            isDarkMode ? 'bg-[#141416] border-white/5' : 'bg-white border-[#FFE4E6]'
-        }`}>
+    <div className="dark" style={{ backgroundColor: '#0A0A0A', color: 'white', '--background': '#0A0A0A', '--foreground': '#FFFFFF' } as React.CSSProperties}>
+      <script dangerouslySetInnerHTML={{ __html: `document.documentElement.classList.add('dark');` }} />
+      <div className="min-h-screen transition-all duration-500 p-6 md:p-12 font-sans selection:bg-[#E11D48]/10" style={{ backgroundColor: '#0A0A0A' }}>
+      <div className="max-w-7xl mx-auto space-y-10">
+        <header className="flex flex-col md:flex-row md:items-center justify-between gap-8 p-10 rounded-[3rem] shadow-xl border transition-all" style={{ backgroundColor: '#141416', borderColor: 'rgba(255,255,255,0.05)' }}>
            <div className="space-y-4">
                 <div className="flex items-center gap-2 text-[#E11D48] font-black uppercase tracking-widest text-[10px]">
                     <ShieldCheck size={16} /> Taklifnoma Asia Admin
                 </div>
-                <h1 className={`font-serif text-4xl font-black transition-colors ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Boshqaruv Paneli</h1>
+                <div className="flex items-center gap-4">
+                    <h1 className="font-serif text-4xl font-black transition-colors text-white">Boshqaruv Paneli</h1>
+                    <ShieldCheck className="text-[#E11D48] animate-pulse" size={24} />
+                </div>
            </div>
 
            <div className="relative">
@@ -257,38 +277,58 @@ export default function AdminPanel() {
                 placeholder="ID yoki ism bo'yicha qidirish..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className={`pl-14 pr-8 py-5 rounded-[2rem] outline-none focus:ring-4 focus:ring-[#E11D48]/5 transition-all w-full md:w-[350px] text-sm font-medium border ${
-                    isDarkMode ? 'bg-white/10 border-white/5 text-white' : 'bg-gray-50 border-gray-100 text-gray-900'
-                }`}
+                className="pl-14 pr-8 py-5 rounded-[2rem] outline-none focus:ring-4 focus:ring-[#E11D48]/5 transition-all w-full md:w-[350px] text-sm font-medium border bg-white/10 border-white/5 text-white shadow-inner"
               />
            </div>
         </header>
 
-        <div className={`rounded-[3rem] shadow-xl border transition-all overflow-hidden ${
-            isDarkMode ? 'bg-[#141416] border-white/5' : 'bg-white border-[#FFE4E6]'
-        }`}>
+        {/* Stats Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+                { label: 'Jami Taklifnomalar', value: stats.total, color: 'blue', icon: Heart },
+                { label: 'To\'langanlar', value: stats.paid, color: 'green', icon: CheckCircle },
+                { label: 'Kutilmoqda', value: stats.pending, color: 'orange', icon: XCircle }
+            ].map((stat, idx) => (
+                <div key={idx} className="p-8 rounded-[2.5rem] bg-[#141416] border border-white/5 shadow-lg flex items-center justify-between group hover:border-[#E11D48]/20 transition-all">
+                    <div className="space-y-2">
+                        <p className="text-[10px] font-black uppercase tracking-widest text-gray-500">{stat.label}</p>
+                        <h3 className="text-4xl font-black text-white">{stat.value}</h3>
+                    </div>
+                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center bg-${stat.color}-500/10 text-${stat.color}-500`}>
+                        <stat.icon size={28} />
+                    </div>
+                </div>
+            ))}
+        </div>
+
+        <div className="rounded-[3rem] shadow-xl border transition-all overflow-hidden" style={{ backgroundColor: '#141416', borderColor: 'rgba(255,255,255,0.05)' }}>
             <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse">
                     <thead>
-                        <tr className={`${isDarkMode ? 'bg-white/5' : 'bg-gray-50/50'} border-b ${isDarkMode ? 'border-white/5' : 'border-gray-50'}`}>
+                        <tr className="bg-white/5 border-b border-white/5">
+                            <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">T/r</th>
                             <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">ID / Havola</th>
                             <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Shaxs</th>
                             <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Telefon</th>
+                            <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Email</th>
+                            <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Manba</th>
                             <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Holat</th>
-                            <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Sana</th>
                             <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400 text-right">Amallar</th>
                         </tr>
                     </thead>
-                    <tbody className={`divide-y ${isDarkMode ? 'divide-white/5' : 'divide-gray-50/50'}`}>
+                    <tbody className="divide-y divide-white/5">
                         {loading ? (
-                            <tr><td colSpan={6} className="p-20 text-center text-gray-400 font-bold animate-pulse">Yuklanmoqda...</td></tr>
+                            <tr><td colSpan={7} className="p-20 text-center text-gray-400 font-bold animate-pulse">Yuklanmoqda...</td></tr>
                         ) : filtered.length === 0 ? (
-                            <tr><td colSpan={6} className="p-20 text-center text-gray-400 font-bold">Hech narsa topilmadi.</td></tr>
-                        ) : filtered.map((inv) => (
-                            <tr key={inv.id} className={`${isDarkMode ? 'hover:bg-white/5' : 'hover:bg-gray-50/10'} transition-colors group`}>
+                            <tr><td colSpan={7} className="p-20 text-center text-gray-400 font-bold">Hech narsa topilmadi.</td></tr>
+                        ) : filtered.map((inv, index) => (
+                            <tr key={inv.id} className="hover:bg-white/5 transition-colors group">
+                                <td className="px-8 py-6">
+                                    <span className="text-xs font-black text-gray-600">#{index + 1}</span>
+                                </td>
                                 <td className="px-8 py-6">
                                     <div className="space-y-1">
-                                        <p className="font-mono text-[10px] font-bold text-gray-500 uppercase tracking-tighter">#{inv.id}</p>
+                                        <p className="font-mono text-[10px] font-bold text-gray-500 uppercase tracking-tighter">#{inv.id.slice(0,8)}</p>
                                         <a 
                                             href={`/${inv.slug}`}
                                             target="_blank"
@@ -302,40 +342,60 @@ export default function AdminPanel() {
                                 </td>
                                 <td className="px-8 py-6">
                                     <div className="flex items-center gap-3">
-                                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-[#E11D48] ${isDarkMode ? 'bg-white/5' : 'bg-[#E11D48]/5'}`}>
+                                        <div className="w-10 h-10 rounded-xl flex items-center justify-center text-[#E11D48] bg-white/5 border border-white/5 group-hover:border-[#E11D48]/20 transition-all">
                                             <Heart size={18} />
                                         </div>
                                         <div>
-                                            <p className={`text-sm font-black transition-colors ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{inv.content?.groomName} & {inv.content?.brideName}</p>
-                                            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">{inv.content?.theme}</p>
+                                            <p className="text-sm font-black transition-colors text-white">{inv.content?.groomName} & {inv.content?.brideName}</p>
+                                            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">{inv.content?.theme || 'Custom Style'}</p>
                                         </div>
                                     </div>
                                 </td>
                                 <td className="px-8 py-6">
                                      <div className="flex items-center gap-2">
-                                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-green-500 ${isDarkMode ? 'bg-green-500/10' : 'bg-green-50'}`}>
+                                        <div className="w-8 h-8 rounded-lg flex items-center justify-center text-green-500 bg-green-500/10">
                                             <Phone size={14} />
                                         </div>
-                                        <span className={`text-xs font-black transition-colors ${isDarkMode ? 'text-gray-400' : 'text-gray-700'}`}>
+                                        <span className="text-xs font-black transition-colors text-gray-400">
                                             {inv.phone || inv.content?.phone || 'Mavjud emas'}
                                         </span>
                                      </div>
+                                </td>
+                                <td className="px-8 py-6">
+                                     <div className="flex items-center gap-2">
+                                        <div className="w-8 h-8 rounded-lg flex items-center justify-center text-blue-500 bg-blue-500/10">
+                                            <Mail size={14} />
+                                        </div>
+                                        <span className="text-xs font-medium transition-colors text-gray-400">
+                                            {inv.email || inv.content?.email || 'Mavjud emas'}
+                                        </span>
+                                     </div>
+                                </td>
+                                <td className="px-8 py-6">
+                                    {inv.source === 'google' || inv.content?.source === 'google' ? (
+                                        <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-blue-500/10 border border-blue-500/20 w-fit">
+                                            <img src="https://www.gstatic.com/images/branding/product/2x/googleg_48dp.png" className="w-4 h-4" alt="Google" />
+                                            <span className="text-[10px] font-black text-blue-500 uppercase tracking-widest">Google</span>
+                                        </div>
+                                    ) : (
+                                        <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-gray-500/10 border border-white/5 w-fit">
+                                            <ExternalLink size={12} className="text-gray-500" />
+                                            <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest">Direkt</span>
+                                        </div>
+                                    )}
                                 </td>
                                 <td className="px-8 py-6">
                                     <button 
                                         onClick={() => toggleStatus(inv.id, inv.is_paid)}
                                         className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-[9px] font-black uppercase tracking-widest transition-all ${
                                             inv.is_paid 
-                                            ? 'bg-green-500/10 text-green-500 border border-green-500/20' 
+                                            ? 'bg-green-500/10 text-green-500 border border-green-500/20 shadow-lg shadow-green-500/5' 
                                             : 'bg-orange-500/10 text-orange-500 border border-orange-500/20 hover:bg-orange-500/20'
                                         }`}
                                     >
                                         <CheckCircle size={14} className={inv.is_paid ? 'opacity-100' : 'opacity-30'} />
                                         {inv.is_paid ? 'Faollashdi' : 'Kutilmoqda'}
                                     </button>
-                                </td>
-                                <td className={`px-8 py-6 text-sm font-medium ${isDarkMode ? 'text-gray-500' : 'text-gray-500'}`}>
-                                    {inv.content?.date}
                                 </td>
                                 <td className="px-8 py-6 text-right">
                                     <div className="flex items-center justify-end gap-2">
@@ -344,7 +404,7 @@ export default function AdminPanel() {
                                               const url = `https://taklifnoma.asia/${inv.slug}`;
                                               window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent('Tabriklaymiz! Sizning taklifnomangiz tayyor va faollashtirildi! 💍✨ %0A%0AHavola: ')}${encodeURIComponent(url)}`, '_blank');
                                           }}
-                                          className="p-3 bg-blue-500/10 text-blue-500 hover:bg-blue-500/20 rounded-xl transition-all"
+                                          className="p-3 bg-blue-500/10 text-blue-500 hover:bg-blue-500/20 rounded-xl transition-all shadow-lg"
                                           title="Telegram"
                                         >
                                             <Send size={16} />
@@ -364,6 +424,8 @@ export default function AdminPanel() {
             </div>
         </div>
       </div>
+      </div>
     </div>
   );
 }
+// FORCE UPDATE TEST 123456

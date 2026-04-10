@@ -1,6 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 
 type Theme = 'light' | 'dark';
 
@@ -14,9 +15,19 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<Theme>('light');
+  const pathname = usePathname();
 
   useEffect(() => {
-    // Check localStorage on mount
+    // Re-check forced dark mode on every route change
+    const isForcedDark = pathname?.startsWith('/admin') || pathname?.startsWith('/dashboard');
+
+    if (isForcedDark) {
+      setThemeState('dark');
+      document.documentElement.classList.add('dark');
+      return;
+    }
+
+    // Check localStorage on mount or non-forced routes
     const savedTheme = localStorage.getItem('taklifnoma_theme') as Theme;
     const initialTheme = savedTheme || 'light';
     setThemeState(initialTheme);
@@ -26,13 +37,18 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     } else {
       document.documentElement.classList.remove('dark');
     }
-  }, []);
+  }, [pathname]);
 
   const setTheme = (newTheme: Theme) => {
-    setThemeState(newTheme);
-    localStorage.setItem('taklifnoma_theme', newTheme);
+    const pathname = window.location.pathname;
+    const isForcedDark = pathname.startsWith('/admin') || pathname.startsWith('/dashboard');
     
-    if (newTheme === 'dark') {
+    const themeToSet = isForcedDark ? 'dark' : newTheme;
+
+    setThemeState(themeToSet);
+    localStorage.setItem('taklifnoma_theme', themeToSet);
+    
+    if (themeToSet === 'dark') {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
