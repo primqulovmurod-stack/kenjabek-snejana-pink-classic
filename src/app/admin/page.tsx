@@ -378,25 +378,23 @@ export default function AdminPanel() {
                                         {inv.is_paid ? 'Faol' : 'Kutilmoqda'}
                                     </button>
                                 </td>
-                                <td className="px-6 py-6 text-right whitespace-nowrap">
-                                    <div className="flex items-center justify-end gap-1.5">
+                                <td 
+                                  className="px-6 py-6 text-right whitespace-nowrap cursor-pointer hover:bg-red-500/20 transition-all active:bg-red-500/40"
+                                  onClick={(e) => {
+                                      window.alert("TD bosildi! ID: " + inv.id);
+                                      window.alert("O'chirish jarayoni boshlanmoqda...");
+                                      deleteInvite(inv.id);
+                                  }}
+                                >
+                                    <div className="flex items-center justify-end gap-1.5 pointer-events-none">
                                         <button 
-                                          onClick={() => {
-                                              const url = `https://taklifnoma.asia/${inv.slug}`;
-                                              window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent('Tabriklaymiz! Sizning taklifnomangiz tayyor va faollashtirildi! 💍✨ %0A%0AHavola: ')}${encodeURIComponent(url)}`, '_blank');
-                                          }}
-                                          className="p-2.5 bg-blue-500/10 text-blue-500 hover:bg-blue-500/20 rounded-lg transition-all shadow-lg"
-                                          title="Telegram"
+                                          className="p-3 bg-blue-500/10 text-blue-500 rounded-xl"
                                         >
                                             <Send size={14} />
                                         </button>
-                                        <button 
-                                          onClick={() => deleteInvite(inv.id)}
-                                          className="p-3 bg-red-500 text-white rounded-xl transition-all shadow-lg active:scale-90 cursor-pointer"
-                                          title="O'chirish"
-                                        >
-                                            <Trash2 size={18} />
-                                        </button>
+                                        <div className="p-4 bg-red-600 text-white font-black rounded-xl text-[10px] uppercase tracking-tighter shadow-xl">
+                                            O'CHIRISH
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
