@@ -161,28 +161,27 @@ export default function AdminPanel() {
     }
   };
 
-  const deleteInvite = async (e: React.MouseEvent, id: string) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const deleteInvite = async (e: any, id: string) => {
+    // Check if capture works
+    console.log('CLICKED DELETE FOR ID:', id);
     
     if (!id) {
-        alert("ID topilmadi! ❌");
+        alert("Xatolik: ID mavjud emas!");
         return;
     }
-    
-    console.log('User clicked delete for ID:', id);
-    
-    if (!window.confirm(`ID: ${id}\n\nUshbu taklifnomani butunlay o'chirib tashlamoqchimisiz?`)) return;
-    
+
+    const isConfirmed = confirm(`ID: ${id}\n\nUshbu taklifnomani o'chirib tashlamoqchimisiz?`);
+    if (!isConfirmed) return;
+
     const original = [...invitations];
     try {
-        // Optimistic UI update
+        // 1. Optimistic Update
         setInvitations(prev => prev.filter(inv => inv.id !== id));
         
+        console.log('Sending DELETE request to API...');
         const response = await fetch(`/api/admin/delete?id=${id}`, {
             method: 'DELETE',
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization': 'Taklifnoma2026!'
             }
         });
@@ -192,9 +191,7 @@ export default function AdminPanel() {
             throw new Error(errorData.error || 'Server error');
         }
         
-        console.log('Successfully deleted via API:', id);
-        
-        // Final sync: also try to delete from local storage for redundancy
+        // localStorage sync
         const localData = localStorage.getItem('taklifnoma_invitations');
         if (localData) {
             const parsed = JSON.parse(localData).filter((inv: any) => inv.id !== id);
@@ -205,7 +202,6 @@ export default function AdminPanel() {
     } catch (err: any) {
         console.error('Delete operation failed:', err);
         alert(`O'chirishda xatolik: ${err.message} ❌`);
-        // Revert UI on failure
         setInvitations(original);
     }
   };
