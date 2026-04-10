@@ -305,27 +305,27 @@ export default function AdminPanel() {
                 <table className="w-full text-left border-collapse">
                     <thead>
                         <tr className="bg-white/5 border-b border-white/5">
-                            <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">T/r</th>
-                            <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">ID / Havola</th>
-                            <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Shaxs</th>
-                            <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Telefon</th>
-                            <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Email</th>
-                            <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Manba</th>
-                            <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Holat</th>
-                            <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400 text-right">Amallar</th>
+                            <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400 whitespace-nowrap">T/r</th>
+                            <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400 whitespace-nowrap">ID / Havola</th>
+                            <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400 whitespace-nowrap">Shaxs</th>
+                            <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400 whitespace-nowrap">Telefon</th>
+                            <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400 whitespace-nowrap">Email</th>
+                            <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400 whitespace-nowrap">Manba</th>
+                            <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400 whitespace-nowrap">Holat</th>
+                            <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400 text-right whitespace-nowrap">Amallar</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-white/5">
                         {loading ? (
-                            <tr><td colSpan={7} className="p-20 text-center text-gray-400 font-bold animate-pulse">Yuklanmoqda...</td></tr>
+                            <tr><td colSpan={8} className="p-20 text-center text-gray-400 font-bold animate-pulse">Yuklanmoqda...</td></tr>
                         ) : filtered.length === 0 ? (
-                            <tr><td colSpan={7} className="p-20 text-center text-gray-400 font-bold">Hech narsa topilmadi.</td></tr>
+                            <tr><td colSpan={8} className="p-20 text-center text-gray-400 font-bold">Hech narsa topilmadi.</td></tr>
                         ) : filtered.map((inv, index) => (
                             <tr key={inv.id} className="hover:bg-white/5 transition-colors group">
-                                <td className="px-8 py-6">
+                                <td className="px-8 py-6 whitespace-nowrap">
                                     <span className="text-xs font-black text-gray-600">#{index + 1}</span>
                                 </td>
-                                <td className="px-8 py-6">
+                                <td className="px-8 py-6 whitespace-nowrap">
                                     <div className="space-y-1">
                                         <p className="font-mono text-[10px] font-bold text-gray-500 uppercase tracking-tighter">#{inv.id.slice(0,8)}</p>
                                         <a 
@@ -339,38 +339,38 @@ export default function AdminPanel() {
                                         </a>
                                     </div>
                                 </td>
-                                <td className="px-8 py-6">
+                                <td className="px-8 py-6 whitespace-nowrap">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 rounded-xl flex items-center justify-center text-[#E11D48] bg-white/5 border border-white/5 group-hover:border-[#E11D48]/20 transition-all">
+                                        <div className="w-10 h-10 rounded-xl flex items-center justify-center text-[#E11D48] bg-white/5 border border-white/5 group-hover:border-[#E11D48]/20 transition-all flex-shrink-0">
                                             <Heart size={18} />
                                         </div>
                                         <div>
-                                            <p className="text-sm font-black transition-colors text-white">{inv.content?.groomName} & {inv.content?.brideName}</p>
-                                            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">{inv.content?.theme || 'Custom Style'}</p>
+                                            <p className="text-sm font-black transition-colors text-white whitespace-nowrap">{inv.content?.groomName} & {inv.content?.brideName}</p>
+                                            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest whitespace-nowrap">{inv.content?.theme || 'Custom Style'}</p>
                                         </div>
                                     </div>
                                 </td>
-                                <td className="px-8 py-6">
+                                <td className="px-8 py-6 whitespace-nowrap">
                                      <div className="flex items-center gap-2">
-                                        <div className="w-8 h-8 rounded-lg flex items-center justify-center text-green-500 bg-green-500/10">
+                                        <div className="w-8 h-8 rounded-lg flex items-center justify-center text-green-500 bg-green-500/10 flex-shrink-0">
                                             <Phone size={14} />
                                         </div>
-                                        <span className="text-xs font-black transition-colors text-gray-400">
+                                        <span className="text-xs font-black transition-colors text-gray-400 whitespace-nowrap">
                                             {inv.phone || inv.content?.phone || 'Mavjud emas'}
                                         </span>
                                      </div>
                                 </td>
-                                <td className="px-8 py-6">
+                                <td className="px-8 py-6 whitespace-nowrap">
                                      <div className="flex items-center gap-2">
-                                        <div className="w-8 h-8 rounded-lg flex items-center justify-center text-blue-500 bg-blue-500/10">
+                                        <div className="w-8 h-8 rounded-lg flex items-center justify-center text-blue-500 bg-blue-500/10 flex-shrink-0">
                                             <Mail size={14} />
                                         </div>
-                                        <span className="text-xs font-medium transition-colors text-gray-400">
+                                        <span className="text-xs font-medium transition-colors text-gray-400 whitespace-nowrap">
                                             {inv.email || inv.content?.email || 'Mavjud emas'}
                                         </span>
                                      </div>
                                 </td>
-                                <td className="px-8 py-6">
+                                <td className="px-8 py-6 whitespace-nowrap">
                                     {inv.source === 'google' || inv.content?.source === 'google' ? (
                                         <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-blue-500/10 border border-blue-500/20 w-fit">
                                             <img src="https://www.gstatic.com/images/branding/product/2x/googleg_48dp.png" className="w-4 h-4" alt="Google" />
@@ -383,7 +383,7 @@ export default function AdminPanel() {
                                         </div>
                                     )}
                                 </td>
-                                <td className="px-8 py-6">
+                                <td className="px-8 py-6 whitespace-nowrap">
                                     <button 
                                         onClick={() => toggleStatus(inv.id, inv.is_paid)}
                                         className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-[9px] font-black uppercase tracking-widest transition-all ${
@@ -396,7 +396,7 @@ export default function AdminPanel() {
                                         {inv.is_paid ? 'Faollashdi' : 'Kutilmoqda'}
                                     </button>
                                 </td>
-                                <td className="px-8 py-6 text-right">
+                                <td className="px-8 py-6 text-right whitespace-nowrap">
                                     <div className="flex items-center justify-end gap-2">
                                         <button 
                                           onClick={() => {
