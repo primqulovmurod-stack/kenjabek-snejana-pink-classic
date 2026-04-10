@@ -1,5 +1,0 @@
-import InvitationWrapper from './InvitationWrapper';
-
-export default async function Page() {
-  return <InvitationWrapper initialHost="localhost" />;
-}
