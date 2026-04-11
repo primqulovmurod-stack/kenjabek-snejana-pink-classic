@@ -32,6 +32,7 @@ export default function NewInvitationPage() {
         content: {
             groomName: 'Kuyov',
             brideName: 'Kelin',
+            email: user.email, // Automatically use Gmail address
             date: '2026-05-15',
             time: '18:00',
             locationName: 'Restoran nomi',
