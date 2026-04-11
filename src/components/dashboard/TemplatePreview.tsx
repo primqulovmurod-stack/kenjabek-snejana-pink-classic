@@ -48,30 +48,30 @@ export default function TemplatePreview({ content, isPreview, isMuted }: Templat
 
   switch (theme) {
     case 'gold-white':
-      return <GoldWhiteInvitation {...content} isPreview />;
+      return <GoldWhiteInvitation {...content} isPreview={isPreview} />;
     case 'floral':
-      return <FloralInvitation content={content} isPreview />;
+      return <FloralInvitation content={content} isPreview={isPreview} />;
     case 'goldclassic':
-        return <GoldClassicInvitation {...content} isPreview isMuted={isMuted} />;
+        return <GoldClassicInvitation {...content} isPreview={isPreview} isMuted={isMuted} />;
     case 'gold-classic-white':
-        return <GoldWhiteInvitation {...content} isPreview isMuted={isMuted} />;
+        return <GoldWhiteInvitation {...content} isPreview={isPreview} isMuted={isMuted} />;
     case 'rolex':
-        return <RolexLuxuryInvitation {...content} isPreview />;
+        return <RolexLuxuryInvitation {...content} isPreview={isPreview} />;
     case 'milliy':
-        return <MilliyInvitation {...content} isPreview />;
+        return <MilliyInvitation {...content} isPreview={isPreview} />;
     case 'pink-luxury':
-        return <PinkLuxuryInvitation {...content} isPreview isMuted={isMuted} />;
+        return <PinkLuxuryInvitation {...content} isPreview={isPreview} isMuted={isMuted} />;
     case 'watch-design':
-        return <WatchDesignInvitation {...content} isPreview />;
+        return <WatchDesignInvitation {...content} isPreview={isPreview} />;
     case 'elegant':
-        return <ElegantInvitation content={content} isPreview />;
+        return <ElegantInvitation content={content} isPreview={isPreview} />;
     case 'luxury-dark':
-        return <LuxuryDarkInvitation {...content} isPreview />;
+        return <LuxuryDarkInvitation {...content} isPreview={isPreview} />;
     case 'pink-white':
-        return <PinkWhiteInvitation {...content} isPreview />;
+        return <PinkWhiteInvitation {...content} isPreview={isPreview} />;
     case 'stitch':
-        return <StitchInvitation isPreview />;
+        return <StitchInvitation isPreview={isPreview} />;
     default:
-      return <GoldWhiteInvitation {...content} isPreview />;
+      return <GoldWhiteInvitation {...content} isPreview={isPreview} />;
   }
 }

@@ -238,7 +238,7 @@ export default function EditInvitationPage({ params }: { params: Promise<{ id: s
         const data = await fetchStatus();
         if (data) {
             const finalContent = { ...data.content };
-            if (finalContent.theme === 'gold-white' || !finalContent.theme) {
+            if (finalContent.theme === 'gold-white' || finalContent.theme === 'pink-white' || !finalContent.theme) {
                 finalContent.theme = 'pink-luxury';
             }
             // Sanani DD.MM.YYYY formatiga o'tkazish (Agar u YYYY-MM-DD bo'lsa)
@@ -262,7 +262,7 @@ export default function EditInvitationPage({ params }: { params: Promise<{ id: s
                 const currentInvite = invites.find((inv: any) => inv.id === id);
                 if (currentInvite) {
                     const finalContent = { ...currentInvite.content };
-                    if (finalContent.theme === 'gold-white' || !finalContent.theme) {
+                    if (finalContent.theme === 'gold-white' || finalContent.theme === 'pink-white' || !finalContent.theme) {
                         finalContent.theme = 'pink-luxury';
                     }
                     if (finalContent.date && finalContent.date.includes('-')) {
@@ -853,7 +853,7 @@ export default function EditInvitationPage({ params }: { params: Promise<{ id: s
         
         {/* Mobile View: No Frame, Full Height */}
         <div className="lg:hidden w-full h-full relative z-10 overflow-y-auto scroll-smooth">
-             <TemplatePreview content={content} isMuted={isAudioMuted} />
+             <TemplatePreview content={content} isMuted={isAudioMuted} isPreview={true} />
         </div>
 
         {/* Desktop View: With Device Frame */}
@@ -873,7 +873,7 @@ export default function EditInvitationPage({ params }: { params: Promise<{ id: s
                 
                 {/* Screen Content */}
                 <div className="w-full h-full bg-white rounded-[2.8rem] overflow-y-auto relative shadow-inner no-scrollbar scroll-smooth">
-                    <TemplatePreview content={content} isMuted={isAudioMuted} />
+                    <TemplatePreview content={content} isMuted={isAudioMuted} isPreview={true} />
                     
                     {/* Floating Status */}
                     <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-[150]">

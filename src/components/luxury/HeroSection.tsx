@@ -53,16 +53,16 @@ export function HeroSection({ groomName, brideName, date, time, locationName, lo
           {/* Groom name */}
           <motion.h1
             {...fadeUp(0)}
-            className={`${isPreview ? 'text-4xl' : 'text-5xl md:text-6xl lg:text-7xl xl:text-8xl'} font-black text-[#0F172A] leading-[1.1] tracking-tight`}
+            className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-[#0F172A] leading-[1.1] tracking-tight"
           >
             {groomName}
-            <br className={isPreview ? 'hidden' : 'hidden md:block'} />
+            <br className="hidden md:block" />
             {' '}
-            <motion.span {...fadeUp(0.15)} className={`${isPreview ? 'text-xl' : 'text-2xl md:text-5xl'} text-[#64748B] font-medium mx-2`}>
+            <motion.span {...fadeUp(0.15)} className="text-2xl md:text-5xl text-[#64748B] font-medium mx-2">
               &amp;
             </motion.span>
             {' '}
-            <br className={isPreview ? 'hidden' : 'hidden md:block'} />
+            <br className="hidden md:block" />
             <motion.span {...fadeUp(0.3)} className="text-purple-700">
               {brideName}
             </motion.span>
