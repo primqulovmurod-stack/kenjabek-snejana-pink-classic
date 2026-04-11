@@ -510,7 +510,17 @@ export default function EditClient({ id }: { id: string }) {
         <button onClick={() => setActiveTab('preview')} className={`px-6 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all ${activeTab === 'preview' ? 'bg-[#E11D48] text-white' : 'text-gray-400'}`}>Preview</button>
       </div>
 
-      <PaymentModal show={showPayment} onClose={() => setShowPayment(false)} amount={25000} id={id} slug={generateSlug(content.groomName, content.brideName, content.date)} />
+      <PaymentModal 
+        isOpen={showPayment} 
+        onClose={() => setShowPayment(false)} 
+        onSuccess={() => {
+            setIsPaid(true);
+            setShowPayment(false);
+        }}
+        price="25 000" 
+        invitationId={id} 
+        slug={generateSlug(content.groomName, content.brideName, content.date)} 
+      />
       <LeadCaptureModal />
       <audio id="preview-audio" loop muted={isAudioMuted} />
     </div>
