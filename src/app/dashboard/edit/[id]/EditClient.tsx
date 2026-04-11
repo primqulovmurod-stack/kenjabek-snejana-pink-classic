@@ -29,7 +29,8 @@ import {
   Volume2,
   VolumeX,
   Sun,
-  Moon
+  Moon,
+  Sparkles
 } from 'lucide-react';
 import { InvitationContent } from '@/lib/types';
 import { supabase } from '@/lib/supabase';
@@ -301,9 +302,7 @@ export default function EditClient({ id }: { id: string }) {
             
         if (error) throw error;
         
-        if (!isPaid) {
-            setShowPayment(true);
-        } else {
+        if (isPaid) {
             const url = `https://taklifnoma.asia/${finalSlug}`;
             navigator.clipboard.writeText(url);
             setIsCopied(true);
@@ -319,6 +318,15 @@ export default function EditClient({ id }: { id: string }) {
   const [isCopied, setIsCopied] = useState(false);
 
   const handleExport = () => {
+      // If already paid, just save and show copy notification
+      if (isPaid) {
+          handleSave();
+          return;
+      }
+
+      // If not paid, trigger payment modal
+      setShowPayment(true);
+
       const isValidPhone = content.phone && content.phone.startsWith('+998') && content.phone.length >= 17;
       if (isValidPhone) {
           handleSave();
@@ -368,7 +376,7 @@ export default function EditClient({ id }: { id: string }) {
                     {isPaid ? 'Faol ✅' : 'To\'lov kutilmoqda'}
                 </div>
                 <button 
-                  onClick={handleExport}
+                  onClick={() => handleSave()}
                   className="flex items-center gap-1.5 px-4 py-2 bg-[#E11D48] text-white rounded-xl transition-all shadow-lg shadow-[#E11D48]/20"
                 >
                     {isSaving ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />}
@@ -474,7 +482,7 @@ export default function EditClient({ id }: { id: string }) {
             </div>
           </section>
 
-          <section className="space-y-6 pb-20">
+          <section className="space-y-6 pb-10">
              <div className="flex items-center justify-between">
                 <h3 className="text-[10px] font-black text-[#E11D48] uppercase tracking-[0.2em] flex items-center gap-2">
                     <CreditCard size={14} /> To'yona
@@ -489,6 +497,15 @@ export default function EditClient({ id }: { id: string }) {
                     <input type="text" placeholder="Egasi" value={content.cardName} onChange={(e) => updateField('cardName', e.target.value)} className={`w-full px-8 py-5 rounded-[1.5rem] text-sm font-bold ${isDarkMode ? 'bg-white/5 text-white' : 'bg-gray-50 text-gray-900'}`} />
                 </div>
               )}
+          </section>
+
+          <section className="pb-32">
+              <button 
+                onClick={handleExport}
+                className="w-full py-6 bg-[#E11D48] text-white rounded-[2rem] font-black text-[12px] uppercase tracking-widest shadow-2xl shadow-[#E11D48]/30 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3"
+              >
+                  <Sparkles size={18} /> TAYYORLASH (EXPORT)
+              </button>
           </section>
         </div>
       </div>
@@ -517,7 +534,7 @@ export default function EditClient({ id }: { id: string }) {
             setIsPaid(true);
             setShowPayment(false);
         }}
-        price="25 000" 
+        price="190 000" 
         invitationId={id} 
         slug={generateSlug(content.groomName, content.brideName, content.date)} 
       />
