@@ -9,18 +9,26 @@ import { useRouter } from 'next/navigation';
 import { templates } from '@/components/dashboard/TemplatePreview';
 import { supabase } from '@/lib/supabase';
 import { useTheme } from '@/context/ThemeContext';
+import { useAuth } from '@/context/AuthContext';
 
 export default function NewInvitationPage() {
   const router = useRouter();
   const { theme } = useTheme();
+  const { user } = useAuth();
   const isDarkMode = theme === 'dark';
 
   const handleSelectTemplate = async (templateId: string) => {
+    if (!user) {
+      router.push('/auth/login');
+      return;
+    }
+
     const newId = Math.random().toString(36).substring(2, 9).toUpperCase();
     const newInvitation = {
         id: newId,
         slug: `taklifnoma-${newId}`,
         is_paid: false,
+        user_id: user.id,
         content: {
             groomName: 'Kuyov',
             brideName: 'Kelin',
@@ -37,6 +45,7 @@ export default function NewInvitationPage() {
         }
     };
 
+    // ... (local storage logic kept) ...
     const localData = localStorage.getItem('taklifnoma_invitations');
     let invites = [];
     if (localData) {
@@ -45,19 +54,20 @@ export default function NewInvitationPage() {
     invites.push(newInvitation);
     localStorage.setItem('taklifnoma_invitations', JSON.stringify(invites));
 
-    // 2. Sync with Supabase (CRITICAL FOR CROSS-DEVICE CONSISTENCY)
+    // 2. Sync with Supabase
     try {
         console.log('Syncing new invitation to Supabase:', newId);
         const { error } = await supabase.from('invitations').upsert({
             id: newId,
             slug: newInvitation.slug,
             is_paid: false,
-            content: newInvitation.content
+            content: newInvitation.content,
+            user_id: user.id
         });
 
         if (error) {
             console.error('Supabase UPSERT error:', error);
-            alert("MA'LUMOTLAR FAQAT BRAUZERDA SAQLANDI: Supabase xatosi: " + error.message);
+            alert("MA'LUMOTLAR FAQAT BRAUZERDA SAQLANDI: " + (error.message || "Baza bilan bog'lanishda xatolik"));
         } else {
             console.log('Supabase sync successful');
         }

@@ -14,11 +14,14 @@ import {
   ChevronRight,
   Heart,
   Moon,
-  Sun
+  Sun,
+  LogOut
 } from 'lucide-react';
 import { Invitation } from '@/lib/types';
 import { supabase } from '@/lib/supabase';
 import { useTheme } from '@/context/ThemeContext';
+import { useAuth } from '@/context/AuthContext';
+import { useRouter } from 'next/navigation';
 
 // Mock data for demonstration
 const mockInvitations: Invitation[] = [
@@ -37,22 +40,6 @@ const mockInvitations: Invitation[] = [
       musicUrl: '',
       theme: 'gold-white'
     }
-  },
-  {
-    id: '2',
-    slug: 'behzod-dilfuza',
-    is_paid: false,
-    content: {
-      groomName: 'Behzod',
-      brideName: 'Dilfuza',
-      date: '2026-06-20',
-      time: '19:00',
-      locationName: 'Navro\'z To\'yxonasi',
-      locationUrl: '#',
-      imageUrl: '',
-      musicUrl: '',
-      theme: 'floral'
-    }
   }
 ];
 
@@ -60,17 +47,32 @@ export default function DashboardPage() {
   const [invitations, setInvitations] = useState<Invitation[]>([]);
   const [loading, setLoading] = useState(true);
   const { theme, toggleTheme } = useTheme();
+  const { user, signOut, loading: authLoading } = useAuth();
   const isDarkMode = theme === 'dark';
+  const router = useRouter();
+
+  // Auth Protection
+  useEffect(() => {
+    if (!authLoading && !user) {
+      router.replace('/auth/login');
+    }
+  }, [user, authLoading, router]);
 
   useEffect(() => {
     const fetchInvitations = async () => {
+      if (!user) return;
+
       try {
         setLoading(true);
-        // Always try Supabase first
-        const { data, error } = await supabase.from('invitations').select('*').order('created_at', { ascending: false });
+        // Filter by user_id for RLS compatibility and privacy
+        const { data, error } = await supabase
+            .from('invitations')
+            .select('*')
+            .eq('user_id', user.id)
+            .order('created_at', { ascending: false });
         
         if (error) {
-            console.error('Supabase fetch error:', error);
+            console.error('Supabase fetch error:', error.message || error);
             // Fallback to local storage on DB error
             const localData = localStorage.getItem('taklifnoma_invitations');
             if (localData) {
@@ -80,28 +82,26 @@ export default function DashboardPage() {
             }
         } else if (data && data.length > 0) {
             setInvitations(data);
-            // Also update local storage for offline use
             localStorage.setItem('taklifnoma_invitations', JSON.stringify(data));
         } else {
-            // No data in Supabase, check local storage
-            const localData = localStorage.getItem('taklifnoma_invitations');
-            if (localData) {
-                setInvitations(JSON.parse(localData));
-            } else {
-                setInvitations(mockInvitations);
-            }
+            // No data for this user in Supabase
+            setInvitations([]);
         }
-      } catch (err) {
+      } catch (err: any) {
         console.error('Fetch catch error:', err);
         const localData = localStorage.getItem('taklifnoma_invitations');
-        setInvitations(localData ? JSON.parse(localData) : mockInvitations);
+        setInvitations(localData ? JSON.parse(localData) : []);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchInvitations();
-  }, []);
+    if (user) {
+      fetchInvitations();
+    } else {
+      setLoading(false);
+    }
+  }, [user]);
 
   const handleDelete = (id: string) => {
     if (confirm('Ushbu taklifnomani o\'chirib tashlamoqchimisiz?')) {

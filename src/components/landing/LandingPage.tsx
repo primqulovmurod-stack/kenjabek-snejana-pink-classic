@@ -6,16 +6,22 @@ import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Phone, Instagram, Send, Sun, Moon, Star, ExternalLink, HelpCircle, CheckCircle2, ChevronDown, Sparkles, ArrowRight, Clock, Heart, Music, MapPin, CreditCard } from 'lucide-react';
 import { useTheme } from '@/context/ThemeContext';
+import { useAuth } from '@/context/AuthContext';
 
 const LandingPage = () => {
   const { theme, toggleTheme } = useTheme();
+  const { user, signInWithGoogle } = useAuth();
   const [mounted, setMounted] = React.useState(false);
   const router = useRouter();
 
   React.useEffect(() => setMounted(true), []);
 
   const handleStartDesign = () => {
-    router.push('/dashboard/new');
+    if (!user) {
+      router.push('/auth/login');
+    } else {
+      router.push('/dashboard/new');
+    }
   };
 
   if (!mounted) return null;

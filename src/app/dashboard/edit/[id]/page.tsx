@@ -37,6 +37,7 @@ import TemplatePreview, { templates } from '@/components/dashboard/TemplatePrevi
 import PaymentModal from '@/components/dashboard/PaymentModal';
 import LeadCaptureModal from '@/components/LeadCaptureModal';
 import { useTheme } from '@/context/ThemeContext';
+import { useAuth } from '@/context/AuthContext';
 const MUSIC_TRACKS = [
     { name: 'Die With A Smile (LADY GAGA)', url: '/assets/die_with_a_smile.mp3' },
     { name: 'Alex Warren - Ordinary Wedding', url: '/assets/Alex_Warren_Ordinary_Wedding_Version_Official_Music_Video.mp3' },
@@ -84,6 +85,7 @@ export default function EditInvitationPage({ params }: { params: Promise<{ id: s
   const [showCountdown, setShowCountdown] = useState(true);
   const [isImageUploading, setIsImageUploading] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  const { user } = useAuth();
   const isDarkMode = theme === 'dark';
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -337,25 +339,26 @@ export default function EditInvitationPage({ params }: { params: Promise<{ id: s
         }
         localStorage.setItem('taklifnoma_invitations', JSON.stringify(invites));
 
-        // 2. Sync with Supabase (CRITICAL FOR CROSS-DEVICE CONSISTENCY)
-        try {
-            const { error } = await supabase
-                .from('invitations')
-                .upsert({
-                    id: id,
-                    slug: finalSlug,
-                    content: finalContent,
-                    phone: finalContent.phone, 
-                    is_paid: isPaid
-                });
-                
-            if (error) {
-                console.error('DATABASE SYNC ERROR:', error);
-                alert("Bazaga saqlashda xatolik! Supabase'da INSERT/UPDATE ruxsatlarini (public) tekshiring: " + error.message);
-            }
-        } catch (dbErr) {
-            console.error('DATABASE SYNC FATAL:', dbErr);
+    // 2. Sync with Supabase
+    try {
+        const { error } = await supabase
+            .from('invitations')
+            .upsert({
+                id: id,
+                slug: finalSlug,
+                content: finalContent,
+                phone: finalContent.phone, 
+                is_paid: isPaid,
+                user_id: user?.id
+            });
+            
+        if (error) {
+            console.error('DATABASE SYNC ERROR:', error);
+            alert("Bazaga saqlashda xatolik! " + error.message);
         }
+    } catch (dbErr) {
+        console.error('DATABASE SYNC FATAL:', dbErr);
+    }
         
         // Logical Next Step after save
         if (!isPaid) {

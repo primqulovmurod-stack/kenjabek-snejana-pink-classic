@@ -9,11 +9,14 @@ import {
   Menu, 
   X,
   CreditCard,
-  Heart
+  Heart,
+  LogOut
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '@/lib/supabase';
 import { useTheme } from '@/context/ThemeContext';
+
+import { useAuth } from '@/context/AuthContext';
 
 export default function DashboardLayout({
   children,
@@ -23,13 +26,16 @@ export default function DashboardLayout({
   const pathname = usePathname();
   const router = useRouter();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const { user, loading, signOut } = useAuth();
   const { theme } = useTheme();
+  // ... rest of logic
   const isDarkMode = theme === 'dark';
 
   useEffect(() => {
-    setLoading(false);
-  }, []);
+    if (!loading && !user && pathname !== '/dashboard/login') {
+      router.replace('/auth/login');
+    }
+  }, [user, loading, router, pathname]);
 
   const menuItems = [
     { name: 'Mening taklifnomalarim', icon: LayoutDashboard, href: '/dashboard' },
@@ -62,7 +68,7 @@ export default function DashboardLayout({
             </Link>
         </div>
 
-        <nav className="flex-1 p-6 space-y-2">
+        <nav className="p-6 space-y-2">
           {menuItems.map((item) => (
             <Link 
               key={item.href} 
@@ -81,15 +87,29 @@ export default function DashboardLayout({
           ))}
         </nav>
 
-        <div className="p-12 mb-8 text-center space-y-4">
-            <div className={`w-16 h-16 rounded-3xl flex items-center justify-center text-[#E11D48] mx-auto shadow-sm transition-all ${
-                isDarkMode ? 'bg-white/5' : 'bg-[#FFF1F2]'
-            }`}>
-                <Heart size={32} fill="currentColor" />
-            </div>
-            <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] leading-relaxed px-4">
-                Baxtli kunlaringiz uchun <br /> Taklifnoma.Asia
-            </p>
+        <div className="mt-auto p-6 space-y-6">
+          <div className="text-center space-y-4">
+              <div className={`w-12 h-12 rounded-2xl flex items-center justify-center text-[#E11D48] mx-auto shadow-sm transition-all ${
+                  isDarkMode ? 'bg-white/5' : 'bg-[#FFF1F2]'
+              }`}>
+                  <Heart size={24} fill="currentColor" />
+              </div>
+              <p className="text-[8px] font-black text-gray-500 uppercase tracking-[0.2em] leading-relaxed">
+                  Taklifnoma.Asia
+              </p>
+          </div>
+
+          <button 
+            onClick={() => signOut()}
+            className={`w-full flex items-center gap-3 px-6 py-4 rounded-2xl text-[11px] font-black uppercase tracking-widest transition-all ${
+              isDarkMode 
+                ? 'text-gray-500 hover:bg-red-500/10 hover:text-red-500'
+                : 'text-gray-400 hover:bg-red-50 hover:text-red-500'
+            }`}
+          >
+            <LogOut size={20} />
+            Chiqish
+          </button>
         </div>
       </aside>
 
@@ -135,7 +155,7 @@ export default function DashboardLayout({
                 </button>
               </div>
 
-              <nav className="flex-1 p-6 space-y-2">
+              <nav className="p-6 space-y-2">
                 {menuItems.map((item) => (
                   <Link 
                     key={item.href} 
@@ -154,6 +174,24 @@ export default function DashboardLayout({
                   </Link>
                 ))}
               </nav>
+
+              <div className="mt-auto p-8 border-t border-white/5 space-y-6">
+                <p className="text-[10px] text-center font-black text-gray-500 uppercase tracking-widest">Taklifnoma.Asia</p>
+                <button 
+                  onClick={() => {
+                    signOut();
+                    setIsSidebarOpen(false);
+                  }}
+                  className={`w-full flex items-center gap-3 px-6 py-4 rounded-2xl text-[11px] font-black uppercase tracking-widest transition-all ${
+                    isDarkMode 
+                      ? 'text-gray-500 hover:bg-red-500/10 hover:text-red-500'
+                      : 'text-gray-400 hover:bg-red-50 hover:text-red-500'
+                  }`}
+                >
+                  <LogOut size={20} />
+                  Chiqish
+                </button>
+              </div>
             </motion.aside>
           </>
         )}

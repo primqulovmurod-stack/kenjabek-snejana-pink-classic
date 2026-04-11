@@ -49,7 +49,7 @@ export default async function Page({
     host.includes('taklifnoma-asia.vercel.app') ||
     host.includes('localhost');
   
-  const isInvitation = host.includes('localhost') || params.theme || (!isMainLanding && (
+  const isInvitation = params.theme || (!isMainLanding && (
     host.includes('vercel.app') || 
     host.includes('pink') || 
     host.includes('gold') || 
